@@ -16,6 +16,9 @@
           </div>
         </a>
       </div>
+      <div *ngIf="subBlp.length === 0" class="no-classes">
+        No Assign Class
+      </div>
     </div>
     <h1 class="mt-5">ALS Elementary</h1>
     <div class="loader-container" *ngIf="isLoading">
@@ -32,6 +35,9 @@
           </div>
         </a>
       </div>
+      <div *ngIf="subAlsElem.length === 0" class="no-classes">
+        No Assign Class
+      </div>
     </div>
     <h1 class="mt-5">ALS Junior Highschool</h1>
     <div class="loader-container" *ngIf="isLoading">
@@ -47,6 +53,9 @@
             <p class="subjecttime">|{{sub.school}}|</p>
           </div>
         </a>
+      </div>
+      <div *ngIf="subAlsJhs.length === 0" class="no-classes">
+        No Assign Class
       </div>
     </div>
   </div>

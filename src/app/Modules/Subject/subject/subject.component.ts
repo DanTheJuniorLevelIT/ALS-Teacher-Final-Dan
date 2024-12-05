@@ -34,28 +34,26 @@ export class SubjectComponent implements OnInit{
   isLoading: boolean = false; // This controls the loader visibility
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.loadSubjects();
+  }
+
+  loadSubjects(): void {
     const id = localStorage.getItem('id');
     this.teacherid = id;
+  
+    // Call the API to fetch subjects
     this.apiserv.getAllTeacherSubjects(this.teacherid).subscribe(
       (response) => {
-        this.allSubjects = response;
-        this.filteredSubjects();
-        // console.log(this.filteredSubjects());
+        this.allSubjects = response; // Assign the fetched subjects
+        this.filteredSubjects(); // Filter the subjects if needed
+        this.isLoading = false; // Hide the loader after data is fetched
       },
       (error) => {
         console.error('Error fetching subjects:', error);
+        this.isLoading = false; // Hide the loader even if there's an error
       }
     );
-  }
-
-  loadSubjects() {
-    this.isLoading = true; // Show the loader before the data is loaded
-
-    // Simulate data fetching (you can replace this with an actual service call)
-    setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 2000); // Simulated delay of 3 seconds
   }
 
   filteredSubjects(){

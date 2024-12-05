@@ -48,23 +48,8 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.loadClasses();
-    const id = localStorage.getItem('id');
-    this.teacherid = id;
-    this.loadMessage(id);
-    // this.apiserv.getSubjects().subscribe(
-    this.apiserv.getTeacherSubjects(this.teacherid).subscribe(
-      (response: any) => {
-        this.sub = response.subject;
-        this.shl = response.school;
-        console.log(this.sub);
-        console.log(this.shl);
-        // console.log(this.sub.school);
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
   }
 
   loadMessage(id: any) {
@@ -88,12 +73,24 @@ export class HomeComponent implements OnInit{
   }
 
   loadClasses() {
-    this.isLoading = true; // Show the loader before the data is loaded
-
-    // Simulate data fetching (you can replace this with an actual service call)
-    setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 2000); // Simulated delay of 2 seconds
+    const id = localStorage.getItem('id');
+    this.teacherid = id;
+    this.loadMessage(id);
+    // this.apiserv.getSubjects().subscribe(
+    this.apiserv.getTeacherSubjects(this.teacherid).subscribe(
+      (response: any) => {
+        this.sub = response.subject;
+        this.shl = response.school;
+        console.log(this.sub);
+        console.log(this.shl);
+        this.isLoading = false; 
+        // console.log(this.sub.school);
+      },
+      (error) => {
+        console.error('Error fetching users:', error);
+        this.isLoading = false; 
+      }
+    );
   }
 
   navigateToModules(classid: number) {

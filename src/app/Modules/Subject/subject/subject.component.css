@@ -132,6 +132,13 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .no-classes {
+    text-align: left;
+    font-size: 1.2em;
+    color: gray;
+    margin: 20px 0;
+  }
   
   /* Media query for responsiveness */
   @media (max-width: 768px) {

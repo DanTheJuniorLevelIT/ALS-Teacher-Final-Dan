@@ -62,38 +62,95 @@ export class MatComponent implements OnInit{
 
   isModalOpen2 = false;
 
+  //OLD
+  // ngOnInit(): void {
+  //   this.loadMaterials();
+  //   // Retrieve the subjectID from localStorage
+  //   this.loadAssessments();
+  //   // this.countDiscussion(this.lessons.lesson_id);
+  //   const storedSubjectID = localStorage.getItem('classid');
+  //   const storedModuleID = localStorage.getItem('moduleid');
+  //   const storedModuleTitle = localStorage.getItem('moduletitle');
+  //   if (storedSubjectID) {
+  //     this.subjectID = +storedSubjectID;  // Convert the string to a number
+  //     this.moduleID = storedModuleID;  // Convert the string to a number
+  //     this.moduleTitle = storedModuleTitle;  // Convert the string to a number
+  //     // this.getLessons(this.moduleID);
+  //     this.showLessons(this.moduleID);
+  //     console.log('Retrieved Subject ID from localStorage:', this.subjectID);
+  //   } else {
+  //     console.error('No subjectID found in localStorage.');
+  //   }
+  //   this.route.fragment.subscribe((fragment: any) => {
+  //     if (fragment) {
+  //         this.viewportScroller.scrollToAnchor(fragment);
+  //     }
+  // });
+  // }
+
+  //NEW
   ngOnInit(): void {
-    this.loadMaterials();
-    // Retrieve the subjectID from localStorage
-    this.loadAssessments();
-    // this.countDiscussion(this.lessons.lesson_id);
+    this.isLoading = true; // Show the loader at the start
+  
+    // Retrieve subjectID, moduleID, and moduleTitle from localStorage
     const storedSubjectID = localStorage.getItem('classid');
     const storedModuleID = localStorage.getItem('moduleid');
     const storedModuleTitle = localStorage.getItem('moduletitle');
+  
     if (storedSubjectID) {
-      this.subjectID = +storedSubjectID;  // Convert the string to a number
-      this.moduleID = storedModuleID;  // Convert the string to a number
-      this.moduleTitle = storedModuleTitle;  // Convert the string to a number
-      // this.getLessons(this.moduleID);
-      this.showLessons(this.moduleID);
-      console.log('Retrieved Subject ID from localStorage:', this.subjectID);
+      this.subjectID = +storedSubjectID; // Convert the string to a number
+      this.moduleID = storedModuleID;
+      this.moduleTitle = storedModuleTitle;
+  
+      // Load lessons and their related assessments
+      this.loadMaterials(this.moduleID);
+      // this.showLessons(this.moduleID);
     } else {
       console.error('No subjectID found in localStorage.');
     }
+  
+    // Scroll to anchor if fragment exists
     this.route.fragment.subscribe((fragment: any) => {
       if (fragment) {
-          this.viewportScroller.scrollToAnchor(fragment);
+        this.viewportScroller.scrollToAnchor(fragment);
       }
-  });
+    });
+  
+    // Load assessments
+    this.loadAssessments();
   }
 
-  loadMaterials() {
-    this.isLoading = true; // Show the loader before the data is loaded
+  //OLD
+  // loadMaterials() {
+  //   this.isLoading = true; // Show the loader before the data is loaded
 
-    // Simulate data fetching (you can replace this with an actual service call)
-    setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 1000); // Simulated delay of 3 seconds
+  //   // Simulate data fetching (you can replace this with an actual service call)
+  //   setTimeout(() => {
+  //     this.isLoading = false; // Hide the loader after data is fetched
+  //   }, 1000); // Simulated delay of 3 seconds
+  // }
+
+  //NEW
+  loadMaterials(id:any): void {
+    this.apiService.getLessons(id).subscribe(
+      (response: any) => {
+        this.lessons = response.lessons;
+        console.log('Lessons:', this.lessons);
+  
+        this.lessons.forEach((lesson: any) => {
+          this.countDiscussion(lesson); // Count discussions for each lesson
+          lesson.filteredAssessments = this.assess.filter(
+            (a: any) => a.lesson_id === lesson.lesson_id
+          );
+        });
+  
+        this.checkLoadingComplete(); // Check if loading is complete
+      },
+      (error) => {
+        console.error('Error fetching lessons:', error);
+        this.checkLoadingComplete(); // Ensure loader hides even on error
+      }
+    );
   }
 
   transformText(text: string): string {
@@ -107,21 +164,45 @@ export class MatComponent implements OnInit{
       .join(''); // Join all paragraphs together
   }
 
-  showLessons(id: any){
-    this.apiService.getLessons(id).subscribe((response: any) => {
-      this.lessons = response.lessons;
-      // this.countDiscussion(response.lessonid);
-      console.log('Lesson: ', this.lessons);
-      console.log('Lessonid: ', response.lessonid);
+  //OLD
+  // showLessons(id: any){
+  //   this.apiService.getLessons(id).subscribe((response: any) => {
+  //     this.lessons = response.lessons;
+  //     // this.countDiscussion(response.lessonid);
+  //     console.log('Lesson: ', this.lessons);
+  //     console.log('Lessonid: ', response.lessonid);
 
-      // After getting lessons, map assessments to each lesson
-      this.lessons.forEach((lesson: any) => {
-        this.countDiscussion(lesson);
-        lesson.filteredAssessments = this.assess.filter(
-          (a: any) => a.lesson_id === lesson.lesson_id
-        );
-      });
-    });
+  //     // After getting lessons, map assessments to each lesson
+  //     this.lessons.forEach((lesson: any) => {
+  //       this.countDiscussion(lesson);
+  //       lesson.filteredAssessments = this.assess.filter(
+  //         (a: any) => a.lesson_id === lesson.lesson_id
+  //       );
+  //     });
+  //   });
+  // }
+
+  //NEW
+  showLessons(id: any): void {
+    this.apiService.getLessons(id).subscribe(
+      (response: any) => {
+        this.lessons = response.lessons;
+        console.log('Lessons:', this.lessons);
+  
+        this.lessons.forEach((lesson: any) => {
+          this.countDiscussion(lesson); // Count discussions for each lesson
+          lesson.filteredAssessments = this.assess.filter(
+            (a: any) => a.lesson_id === lesson.lesson_id
+          );
+        });
+  
+        this.checkLoadingComplete(); // Check if loading is complete
+      },
+      (error) => {
+        console.error('Error fetching lessons:', error);
+        this.checkLoadingComplete(); // Ensure loader hides even on error
+      }
+    );
   }
 
   getLessons(id: number) {
@@ -144,24 +225,57 @@ export class MatComponent implements OnInit{
     );
   }
 
-  loadAssessments(){
+  //OLD
+  // loadAssessments(){
+  //   this.apiService.getAssessment().subscribe(
+  //     (response: any) => {
+  //       const today = new Date();
+  //       this.assess = response;
+  //       console.log(this.assess);
+
+  //       this.lessons.forEach((lesson: any) => {
+  //         lesson.filteredAssessments = this.assess.filter(
+  //           (a: any) => a.lesson_id === lesson.lesson_id
+  //         );
+  //       });
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching users:', error);
+  //     }
+  //   );
+  // }
+
+  //NEW
+  loadAssessments(): void {
     this.apiService.getAssessment().subscribe(
       (response: any) => {
-        const today = new Date();
-        this.assess = response;
-        console.log(this.assess);
-
+        this.assess = response; // Assign assessments
+        console.log('Assessments:', this.assess);
+  
         this.lessons.forEach((lesson: any) => {
           lesson.filteredAssessments = this.assess.filter(
             (a: any) => a.lesson_id === lesson.lesson_id
           );
         });
+  
+        this.checkLoadingComplete(); // Check if loading is complete
       },
       (error) => {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching assessments:', error);
+        this.checkLoadingComplete(); // Ensure loader hides even on error
       }
     );
   }
+
+  // Helper method to check if all async operations are done
+checkLoadingComplete(): void {
+  if (
+    this.lessons !== undefined &&
+    this.assess !== undefined
+  ) {
+    this.isLoading = false; // Hide the loader when all data is fetched
+  }
+}
 
   countDiscussion(lesson: any){
     localStorage.setItem('lessonid', lesson.lesson_id)
