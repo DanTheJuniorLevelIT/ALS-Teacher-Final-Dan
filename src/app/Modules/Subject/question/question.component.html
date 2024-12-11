@@ -27,14 +27,17 @@
         </a>
     </div>
 </div>
-<div class="modules">
+<div class="loader-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+</div>
+<div class="modules" *ngIf="!isLoading">
     <div class="module">
         <div class="p-6 bg-background text-foreground">
             <div class="header-container">
                 <h2 class="text-xl font-bold mb-4">{{ det.title }} | {{totalPoints}} points</h2>
                 <div class="student-info" (click)="navigateToProgress(det.title)">
                     <a>
-                        <span class="eye-icon"><i class="fa fa-check-square-o"></i></span>
+                        <span class="eye-icon"><i class="fa fa-list"></i></span>
                     </a>
                     <span class="student-count">Students Completed: {{ completedCount }}/{{ totalStudents }}</span>
                 </div>

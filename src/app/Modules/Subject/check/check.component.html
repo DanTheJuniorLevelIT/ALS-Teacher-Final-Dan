@@ -30,17 +30,21 @@
     </ol>
 </nav>
 <div class="header">
-    <!-- <h1 style="text-align: center;">Checking</h1> -->
     <h1 style="text-align: center;">{{fname}} {{lname}}'s Assessment</h1>
     <div class="button-group">
-      <a [routerLink]="['/main/Subject/main/subject/modulesmain/', subjectID, 'modules', moduleID, 'mat']"  routerLinkActive="active">
-          <button class="nav-btn">Learning Material</button>
-      </a>
-  </div>
-  </div>
-<div class="modules">
+        <a [routerLink]="['/main/Subject/main/subject/modulesmain/', subjectID, 'modules', moduleID, 'mat']"  routerLinkActive="active">
+            <button class="nav-btn">Learning Material</button>
+        </a>
+    </div>
+</div>
+<div class="loader-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+</div>
+<div class="modules" *ngIf="!isLoading">
   <div class="module">
-      <h2 class="text-xl font-bold mb-4">{{ lessonTitle }}</h2>
+    <a [routerLink]="['/main/Subject/main/subject/modulesmain', subjectID, 'modules', moduleID, 'assess', 'question', assessmentID, 'progress']">
+        <h2 class="text-xl font-bold mb-4">{{ lessonTitle }}</h2>
+    </a>
       <div class="p-6 bg-background text-foreground">
           <div class="header-container">
               <h2 class="text-xl font-bold mb-4">{{ det.title }}</h2>

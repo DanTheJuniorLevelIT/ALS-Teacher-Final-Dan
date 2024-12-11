@@ -1,0 +1,62 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/main/Subject/main']">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/main/Subject/main/subject']">
+                Subjects
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/main/Subject/main/subject/modulesmain', classid,  'students']">
+                Students
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Student Assessments</li>
+    </ol>
+</nav>
+<div class="container">
+    <div class="main-content">
+        <div class="header">
+            <h1>{{fname + ' ' + lname}} All Assessments</h1>
+        </div>
+        <div class="loader-container" *ngIf="isLoading">
+            <div class="spinner"></div>
+        </div>
+        <div class="assessments-list"  *ngIf="!isLoading">
+            <ul>
+                <ng-container *ngIf="studentsAssess.length; else noStudents">
+                    <ul class="assessment-list">
+                        <li *ngFor="let assessment of studentsAssess">
+                            <div (click)="navigateToProgress(assessment.assessID, assessment.lesson_title, assessment.module_id)" class="assessment-row">
+                                <span class="assessment-title">Lesson: {{ assessment.lesson_title }}</span>
+                                <span class="assessment-title" style="color: red;">Due: {{ assessment.due_date | date: 'MMMM d, yyyy' }}</span>
+                                <span class="assessment-title">
+                                    <label>
+                                        <span>{{ assessment.assessment_title }}</span>
+                                        <input
+                                            type="checkbox"
+                                            [checked]="assessment.allQuestionsAnswered"
+                                            disabled
+                                            class="assessment-checkbox"
+                                        />
+                                    </label>
+                                </span>
+                                
+                                <span class="assessment-title" *ngIf="assessment.score != 0 && assessment.score != null">
+                                    Score: {{ assessment.score }}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </ng-container>
+                <ng-template #noStudents>
+                  <div style="text-align: center;">
+                    <h5>No Assessment yet</h5>
+                  </div>
+                </ng-template>
+            </ul>
+        </div>    
+    </div>
+</div>

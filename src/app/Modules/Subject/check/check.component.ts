@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 })
 export class CheckComponent implements OnInit {
 
+  isLoading: boolean = false;
+
   assessTitle: any;
 
   fname: any;
@@ -39,6 +41,7 @@ export class CheckComponent implements OnInit {
   isTeacher: boolean = true;
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.assessTitle = localStorage.getItem('assessTitle');
     const first = localStorage.getItem('fname');
     const last = localStorage.getItem('lname');
@@ -80,8 +83,10 @@ export class CheckComponent implements OnInit {
         console.log('student answers: ', this.studentAnswers);
         console.log('student file: ', this.studFile);
         console.log('student Total Score: ', this.studScore);
+        this.isLoading = false;
       } else {
         console.error('Failed to load student answers');
+        this.isLoading = false;
       }
     });
   }

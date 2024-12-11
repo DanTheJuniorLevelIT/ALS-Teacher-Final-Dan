@@ -32,7 +32,10 @@
         </a>
     </div>
 </div>
-<div class="modules">
+<div class="loader-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+</div>
+<div class="modules" *ngIf="!isLoading">
     <div class="module">
         <div class="students-table">
             <h2>{{lessonTitle}}</h2>
@@ -56,18 +59,35 @@
                       <td>
                         <input type="checkbox" [checked]="student.completed" disabled>
                       </td>
-                      <td>{{ student.score || 'No grade yet' }}
-                        <a (click)="navigateToChecking(student.lrn, student.firstname, student.lastname)">
-                            <button  class="nav-btn auto-check-btn">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
+                      <ng-container *ngIf="student.score !== null; else elseTemplate">
+                        <td>
+                          {{ student.score }} <!-- Always display the score, including 0 -->
+                          <a (click)="navigateToChecking(student.lrn, student.firstname, student.lastname)">
+                            <button class="nav-btn auto-check-btn">
+                              <i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
-                        </a>
-                        <a (click)="navigateToViewFile(student.lrn, student.firstname, student.lastname)">
+                          </a>
+                          <a (click)="navigateToViewFile(student.lrn, student.firstname, student.lastname)">
                             <button *ngIf="student.file != null" class="nav-btn auto-check-btn">
-                                <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                              <i class="fa fa-file-image-o" aria-hidden="true"></i>
                             </button>
-                        </a>
-                      </td>
+                          </a>
+                        </td>
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        <td>No Grade Yet
+                          <a (click)="navigateToChecking(student.lrn, student.firstname, student.lastname)">
+                            <button class="nav-btn auto-check-btn">
+                              <i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                          </a>
+                          <a (click)="navigateToViewFile(student.lrn, student.firstname, student.lastname)">
+                            <button *ngIf="student.file != null" class="nav-btn auto-check-btn">
+                              <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                            </button>
+                          </a>
+                        </td>
+                      </ng-template>
                     </tr>
                 </tbody>
             </table>

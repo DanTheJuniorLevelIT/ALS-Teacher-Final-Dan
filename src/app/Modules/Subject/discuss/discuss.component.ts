@@ -37,7 +37,7 @@ export class DiscussComponent implements OnInit{
 
   ngOnInit(): void {
     // Retrieve the subjectID from localStorage
-    this.loadTopics();
+    this.isLoading = true;
     const storedSubjectID = localStorage.getItem('classid');
     const storedModuleID = localStorage.getItem('moduleid');
     const storedModuleTitle = localStorage.getItem('moduletitle');
@@ -48,6 +48,7 @@ export class DiscussComponent implements OnInit{
       this.moduleID = storedModuleID;  // Convert the string to a number
       this.moduleTitle = storedModuleTitle;  // Convert the string to a number
       this.lessonTitle = storedLessonTitle;
+      this.lessonid = storedLessonID;
       this.apiService.getLessons(this.moduleID).subscribe((response: any) => {
         this.lessons = response.lessons;
         console.log('Lesson: ', this.lessons);
@@ -64,15 +65,6 @@ export class DiscussComponent implements OnInit{
     }
   }
 
-  loadTopics() {
-    this.isLoading = true; // Show the loader before the data is loaded
-
-    // Simulate data fetching (you can replace this with an actual service call)
-    setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 3000); // Simulated delay of 3 seconds
-  }
-
   loadDiscussion(lessonid: any) {
     this.apiService.getDiscussion(lessonid).subscribe(
       (response: any) => {
@@ -85,6 +77,7 @@ export class DiscussComponent implements OnInit{
           );
         });
   
+        this.isLoading = false;
         console.log('Discussions:', this.discuss);
       },
       (error) => {
@@ -110,15 +103,16 @@ export class DiscussComponent implements OnInit{
         icon: "success"
       });
       this.closeModal();
+      this.loadDiscussion(this.lessonid);
       this.createDiscussion.get('discussion_topic')?.reset();
-      this.route.queryParams.subscribe(params => {
-        const lessonId = params['lessonId'];
-        const lessTitle = params['lessTitle'];
-        this.lessonTitle = lessTitle;
-        if (lessonId) {
-            this.loadDiscussion(lessonId);
-        }
-      });
+      // this.route.queryParams.subscribe(params => {
+      //   const lessonId = params['lessonId'];
+      //   const lessTitle = params['lessTitle'];
+      //   this.lessonTitle = lessTitle;
+      //   if (lessonId) {
+      //       this.loadDiscussion(lessonId);
+      //   }
+      // });
       this.isSubmitting = false;
     })
   }

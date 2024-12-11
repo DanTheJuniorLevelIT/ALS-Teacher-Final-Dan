@@ -15,32 +15,31 @@
     <div class="main-content">
       <div class="header">
         <h1>Students Enrolled</h1>
-        <span class="badge2">{{ total }} Students</span>
+        <div class="loader-container" *ngIf="isLoading">
+          <div class="spinner"></div>
+        </div>
+        <span class="badge2" *ngIf="!isLoading">{{ total }} Students</span>
       </div>
   
-      <div class="table-container">
+      <div *ngIf="!isLoading" class="table-container">
         <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Birthdate</th>
               <th>Gender</th>
-              <th>Last Education</th>
-              <th>Program</th>
               <th>Contact</th>
+              <th>Assessments</th>
             </tr>
           </thead>
           <tbody>
             <ng-container *ngIf="students.length; else noStudents">
-              <tr *ngFor="let student of students; let i = index" [class.alt-row]="i % 2 === 1">
+              <tr (click)="navigateToStudentAssessments(student)" *ngFor="let student of students; let i = index" [class.alt-row]="i % 2 === 1">
                 <td>{{ student.firstname + ' ' + (student.middlename || '') + ' ' + student.lastname }}</td>
                 <td>{{ student.birthdate | date: 'MMMM d, yyyy' }}</td>
                 <td>{{ student.gender }}</td>
-                <td>{{ student.last_education }}</td>
-                <td>
-                  <span class="badge">{{ student.program }}</span>
-                </td>
                 <td>{{ student.contact_numbers || 'N/A' }}</td>
+                <td>{{ student.completed_assessments }} / {{ student.total_assessments}}</td>
               </tr>
             </ng-container>
           </tbody>

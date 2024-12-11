@@ -128,7 +128,7 @@
             </div>
             <div class="card-footer" >
                 <a [routerLink]="['/main/Subject/main/subject/modulesmain/', subjectID, 'modules', moduleID, 'discuss']" (click)="setLessonID(lesson)" routerLinkActive="active">
-                    Discussions | {{lesson.cDiscussion || 0}} Topic/s
+                    Discussions | {{lesson.discussion_count || 0}} Topic/s
                 </a>
             </div>
         </div>
@@ -207,7 +207,7 @@
                 <input formControlName="due_date" autocomplete="off" name="dueDate" id="edit-dueDate" class="input" type="date">
             </div>
             <div class="button-group">
-                <button class="submit-btn">Save</button>
+                <button class="submit-btn" [disabled]="isSubmitting">Save</button>
             </div>
         </form>
     </div>

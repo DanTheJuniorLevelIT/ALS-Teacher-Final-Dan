@@ -14,6 +14,7 @@ templateUrl: './discussion.component.html',
 export class DiscussionComponent implements OnInit {
 
   isLoading: boolean = false; // This controls the loader visibility
+  isSubmitting: boolean= false;
   
   private intervalId: any; // To store the interval reference
   subjectID: number | null = null;
@@ -131,6 +132,7 @@ export class DiscussionComponent implements OnInit {
 
   // Submit a new discussion reply
   submitAnswer(){
+    this.isSubmitting = true;
     const newAnswer = this.discussionForm.value.answer;
     const storedTeacherID = localStorage.getItem('id');
 
@@ -145,6 +147,7 @@ export class DiscussionComponent implements OnInit {
     this.apiService.sendDiscussionReplies(payload).subscribe((response: any) => {
       this.loadDiscussions(this.discussuinID); // Reload replies after sending a new one
       this.discussionForm.reset();
+      this.isSubmitting = false;
     });
   }
 

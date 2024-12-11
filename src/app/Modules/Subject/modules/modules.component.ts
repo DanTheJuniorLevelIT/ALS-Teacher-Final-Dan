@@ -49,12 +49,8 @@ export class ModulesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadModules();
-    this.storedSubjectID = localStorage.getItem('classid');
+    this.isLoading = true;
     
-    this.apiService.getModules(this.storedSubjectID).subscribe((response: any) => {
-      this.modules = response;
-      console.log('Modules:', this.modules);
-    });
   }
 
   isModuleOpen(moduleDate: string): boolean {
@@ -90,12 +86,14 @@ export class ModulesComponent implements OnInit {
   }
 
   loadModules() {
-    this.isLoading = true; // Show the loader before the data is loaded
-
     // Simulate data fetching (you can replace this with an actual service call)
-    setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 1000); // Simulated delay of 3 seconds
+    this.storedSubjectID = localStorage.getItem('classid');
+    
+    this.apiService.getModules(this.storedSubjectID).subscribe((response: any) => {
+      this.modules = response;
+      console.log('Modules:', this.modules);
+      this.isLoading = false;
+    });
   }
 
   save() {

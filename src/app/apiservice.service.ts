@@ -176,6 +176,11 @@ export class ApiserviceService {
     return this.http.get(`${this.url}api/subjects/students/${id}/${assid}`, { headers });
   }
 
+  getStudentAssessments(lrn: any, classid: any){
+    const headers = { 'Authorization': 'Bearer ' + this.token };
+    return this.http.get(`${this.url}api/subjects/learnerassessments/${lrn}/${classid}`, { headers });
+  }
+
   autoCheck(id: any, assid: any) {
     const headers = { 'Authorization': 'Bearer ' + this.token };
     return this.http.post(`${this.url}api/subjects/autocheck/${id}/${assid}`, null, { headers });
@@ -301,6 +306,11 @@ export class ApiserviceService {
   sendMessage(data: any){
     const headers = { 'Authorization': 'Bearer ' + this.token };
     return this.http.post(`${this.url}api/messages/compose`, data, { headers });
+  }
+
+  getConvoMessages(lrn: any){
+    const headers = { 'Authorization': 'Bearer ' + this.token };
+    return this.http.get(`${this.url}api/messages/conversation/${lrn}`, { headers });
   }
 
   //END

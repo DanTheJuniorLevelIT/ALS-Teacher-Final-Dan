@@ -30,10 +30,15 @@ export class MessageComponent implements OnInit{
   selectedMessageID: any;
   replyText: string = '';
 
-  viewMessage(msg: any) {
-    this.selectedMessage = msg;
-    this.selectedMessageID = msg.messageid;
-    this.isModalOpen3 = true;
+  viewConvoMessage(msg: any) {
+    // this.selectedMessage = msg;
+    // this.selectedMessageID = msg.messageid;
+    // this.isModalOpen3 = true;
+    const fullName = `${msg.firstname} ${msg.lastname}`;
+    localStorage.setItem('lrn', msg.lrn);
+    localStorage.setItem('learner', fullName);
+
+    this.route.navigate(['/main/Message/main/message/view']);
   }
 
   sendReply(lrn: any) 
@@ -98,7 +103,7 @@ export class MessageComponent implements OnInit{
     // Set an interval to refresh discussions every 30 seconds
     this.intervalId = setInterval(() => {
       this.loadMessage(adminid);
-    }, 30000); // = 30 seconds
+    }, 20000); // = 20 seconds
   }
 
   ngOnDestroy(): void {
@@ -114,7 +119,7 @@ export class MessageComponent implements OnInit{
     // Simulate data fetching (you can replace this with an actual service call)
     setTimeout(() => {
       this.isLoading = false; // Hide the loader after data is fetched
-    }, 30000); // Simulated delay of 30 seconds
+    }, 20000); // Simulated delay of 30 seconds
   }
 
   loadMessage(id: any){

@@ -1,11 +1,41 @@
-<!-- <div class="wrapper">
+<div class="wrapper">
     <div class="header">
         <div class="title-and-date">
-            <h1>Message</h1>
-            <p class="current-date">{{ currentDate | date: 'MMMM d, y | h:mm a' }}</p>
+            <h1>Name: {{NameLearner}}</h1>
+            <!-- <p class="current-date">{{ currentDate | date: 'MMMM d, y | h:mm a' }}</p> -->
         </div>
     </div>
-    <div class="cards-container">
-
+    <div class="loader-container" *ngIf="isLoading">
+        <div class="spinner"></div>
     </div>
-</div> -->
+    <!-- <div class="conversation-container" *ngIf="!isLoading">
+        <div class="message" *ngFor="let message of convoMessages">
+            <div [ngClass]="{ 'admin-message': message.sender_name === 'Admin', 'learner-message': message.sender_name !== 'Admin' }">
+                <p class="sender-name">{{ message.sender_name }}</p>
+                <p class="message-text">{{ message.messages }}</p>
+                <p class="timestamp">{{ message.created_at | date: 'MMMM d, y | h:mm a' }}</p>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="conversation-container">
+        <div class="message" *ngFor="let message of convoMessages">
+            <div 
+                [ngClass]="{
+                    'admin-message': message.sender_name === currentUser, 
+                    'learner-message': message.sender_name !== currentUser
+                }">
+                <!-- <p class="sender-name">{{ message.sender_name }}</p> -->
+                <p class="message-text">{{ message.messages }}</p>
+                <p class="timestamp">{{ message.created_at | date: 'MMMM d, y | h:mm a' }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="reply-container" *ngIf="!isLoading">
+        <textarea [(ngModel)]="newMessage" placeholder="Type your message here..."></textarea>
+        <!-- <button (click)="sendMessage()" class="submitting" [disabled]="isSubmitting">Send</button> -->
+        <button (click)="sendMessage()" class="submitting" [disabled]="isSubmitting"><i class="fa fa-paper-plane-o fa-2x" aria-hidden="true"></i></button>
+    </div>
+</div>
+

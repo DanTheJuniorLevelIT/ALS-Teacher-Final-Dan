@@ -1,166 +1,48 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    display: flex;
-    padding: 20px;
-}
-
-.sidebar {
-    width: 300px;
-    height: 600px;
-    margin-right: 20px;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.notification-icon{
-    cursor: pointer;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    margin-right: 20px;
-}
-
-.course-details {
-    text-align: center;
-}
-
-.course-details img.profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-.course-details h2, .course-details h3 {
-    margin: 10px 0;
-    color: #333;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar ul li {
-    margin: 20px 0;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: #333;
+.module-title {
+    font-size: 1.75em;
     font-weight: bold;
+    color: #000; /* Black for module titles */
+    margin-left: 0;
+    margin-top: 30px; /* No indentation for the module */ 
 }
 
-.sidebar ul li a.active {
-    color: #0c7db1;
+.lesson-container {
+    margin-left: 60px; /* Indent lessons under modules */ 
 }
 
-.main-content {
-    padding-left: 10px;
-    max-width: 1000px;
-    width: 100%;
-}
-
-.header {
-    text-align: center;
-}
-
-.header h1 {
-    /* color: #666; */
-    margin-bottom: 20px;
-}
-
-.button-group {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap; /* Ensure buttons wrap to the next line on smaller screens */
-}
-
-.nav-btn {
-    padding: 10px 20px;
-    margin: 0 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    flex: 1 1 auto; /* Allow buttons to grow and shrink */
-    max-width: 200px; /* Ensure buttons don't get too large */
-}
-
-a.active .nav-btn {
-    background-color: #0056b3; 
-    /* box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);  */
-}
-
-.nav-btn:hover {
-    background-color: #0056b3;
-}
-
-.modules {
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.module {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.module-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.module a {
-    text-decoration: none;
-    color: #0c7db1;
+.lesson-title {
+    font-size: 1.5em;
     font-weight: bold;
+    color: #333; /* Dark gray for lesson titles */
 }
 
-.module p {
-    color: #888;
-    margin: 0;
+.assessment-container {
+    margin-left: 70px; /* Indent assessments under lessons */ 
 }
 
-.file-link {
-    margin-top: 5px;
-    padding-left: 20px; /* Indent the file link */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.assessment-label {
+    font-weight: bold;
+    color: #555; /* Medium gray for labels */
 }
 
-.instruction {
-    padding-left: 40px; /* Additional indentation for the instruction text */
-    color: #666; /* Optional: Change text color to differentiate the instruction */
-    font-style: italic; /* Optional: Italicize the instruction text */
-    margin-top: 4px; /* Adjust the top margin to reduce space between instruction and points */
-    margin-bottom: 10px; /* Optional: Add some space after the instruction */
-}
-
-.file-link a {
+.assessment-link {
+    font-size: 1.25em;
     text-decoration: none;
-    color: #0056b3;
-    font-weight: normal;
+    padding-right: 30px;
+    color: #000; /* Black for assessment links */
 }
 
-.file-link a:hover {
+.assessment-link:hover {
     text-decoration: underline;
-} 
+    color: blue; /* Dark gray for hover state */
+}
 
-/* Modal Style */
-.modal {
+.due-date {
+    font-size: 0.9em;
+    color: red; /* Light gray for due date */
+}
+
+.modal2 {
     display: none;
     position: fixed;
     top: 0;
@@ -172,21 +54,21 @@ a.active .nav-btn {
     align-items: center;
 }
 
-.modal.show {
+.modal2.show2 {
     display: flex;
 }
 
-.modal-content {
+.modal-content2 {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 550px;
+    width: 600px;
     max-width: 100%;
     position: relative;
 }
 
-.modal-content .close {
+.modal-content2 .close2 {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -194,45 +76,46 @@ a.active .nav-btn {
     cursor: pointer;
 }
 
-.modal-content h2 {
+.modal-content2 h2 {
     margin-top: 0;
 }
 
-.input-group {
+.input-group, .input-group2 {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem; 
 }
 
-.label {
+.label, .label2 {
     margin-bottom: .3rem;
     font-size: .9rem;
     font-weight: bold;
     color: #05060f99;
+    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
 }
 
-.input, .textarea {
+.input, .input2 {
     max-width: 100%;
-    background-color: #f5f5f5;
+    height: 44px;
+    background-color: #05060f0a;
     padding: 0 1rem;
     border: 2px solid transparent;
     font-size: 1rem;
-    transition: border-color .3s, color .3s, background .2s;
+    transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s, background .2s cubic-bezier(.25,.01,.25,1) 0s;
 }
 
-.input:hover, .input:focus, .textarea:hover, .textarea:focus {
+.input:hover, .input:focus, .input-group:hover .input, .input2:hover, .input2:focus, .input-group2:hover .input2 {
     outline: none;
     border-color: #05060f;
 }
 
-.textarea {
-    height: 100px;
-    resize: vertical; /* Allows vertical resizing */
+.input-group:hover .label, .input:focus ~ .label, .input-group2:hover .label2, .input2:focus ~ .label2 {
+    color: #05060fc2;
 }
 
-.button-group {
+.button-group2 {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 20px;
 }
 
@@ -249,6 +132,21 @@ a.active .nav-btn {
 
 .submit-btn:hover {
     background-color: #055a8c;
+}
+
+.submit-btn:disabled {
+    background-color: #d6d6d6; /* Gray */
+    color: #a1a1a1; /* Lighter gray text */
+    cursor: not-allowed;
+}
+
+/* .icon-container {
+    display: flex;
+    align-items: center; 
+} */
+
+.separator {
+    margin: 0 10px; /* Adjust spacing around the separator */
 }
 
 @media (max-width: 768px) {

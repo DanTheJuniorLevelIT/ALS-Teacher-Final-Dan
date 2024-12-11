@@ -311,6 +311,7 @@ checkLoadingComplete(): void {
   }
 
   save() {
+    this.isSubmitting = true;
     if (this.createAssessment.valid) {
       this.isSubmitting = true; // Disable the button
       this.apiService.createAssess(this.createAssessment.value).subscribe(

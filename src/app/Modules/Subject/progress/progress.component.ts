@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 })
 export class ProgressComponent {
 
+  isLoading: boolean = false;
+
   assessTitle: any;
   lessonTitle: any;
   moduleTitle:any;
@@ -34,6 +36,7 @@ export class ProgressComponent {
 constructor(private apiserv: ApiserviceService, private router: Router){}
 
 ngOnInit(): void {
+  this.isLoading = true
   // Retrieve the subjectID from localStorage
   this.assessTitle = localStorage.getItem('assessTitle');
   const storedSubjectID = localStorage.getItem('classid');
@@ -60,9 +63,11 @@ loadStudents(){
       this.totalPoints = data.total_points; 
       // this.students = data.score;
       console.log("Students: ", data.status);
+      this.isLoading = false;
     },
     (error) => {
       console.error('Error fetching students', error);
+      this.isLoading = false;
     }
   );
 }

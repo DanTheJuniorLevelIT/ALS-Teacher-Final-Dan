@@ -21,6 +21,128 @@
     color: #666; /* Adjust color as needed */
   }
 
+  .conversation-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    margin: 10px 0;
+}
+
+/* .admin-message {
+    text-align: right;
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.learner-message {
+    text-align: left;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+} */
+
+.admin-message {
+  margin-left: auto;
+  text-align: right;
+  background-color: #f0f0f0; /* Gray for learner */
+  color: black;
+  padding: 10px;
+  border-radius: 10px 0 10px 10px;
+  max-width: 40%;
+  word-wrap: break-word;
+}
+
+.learner-message {
+  margin-right: auto;
+  text-align: left;
+  background-color: #f0f0f0; /* Gray for learner */
+  color: black;
+  padding: 10px;
+  border-radius: 0 10px 10px 10px;
+  max-width: 40%;
+  word-wrap: break-word;
+}
+
+.reply-container {
+    display: flex;
+    gap: 10px;
+}
+
+/* textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+} */
+
+.message-text {
+  margin: 0;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #888;
+}
+
+.reply-container {
+  display: flex;
+  gap: 10px;
+}
+
+textarea {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin .5s linear infinite;
+}
+
+.submitting:disabled {
+  background-color: #d6d6d6; /* Gray */
+  color: #a1a1a1; /* Lighter gray text */
+  cursor: not-allowed;
+}
+
+/* Animation for the spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
     /* Media query for responsiveness */
   @media (max-width: 768px) {
     .wrapper {

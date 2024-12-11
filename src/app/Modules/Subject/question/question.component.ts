@@ -15,6 +15,7 @@ import Swal from 'sweetalert2'
 export class QuestionComponent implements OnInit{
 
   isSubmitting: boolean = false; // Tracks submission state
+  isLoading: boolean = false; // Tracks submission state
 
   qid: any;
   res: any;
@@ -51,6 +52,7 @@ export class QuestionComponent implements OnInit{
   constructor(private apiService: ApiserviceService, private router: Router) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.options.push({ text: '' });
     // Retrieve the ClassID from localStorage
     this.lessonTitle = localStorage.getItem('lessTitle');
@@ -82,6 +84,7 @@ export class QuestionComponent implements OnInit{
     this.apiService.getTotalPoints(this.assessmentID).subscribe((response: any)=>{
       this.totalPoints = response;
       console.log(response);
+      this.isLoading = false;
     })
   }
 
@@ -103,8 +106,10 @@ export class QuestionComponent implements OnInit{
         this.questions = response.data;  // Access the data array in the response
         this.filteredQuestionTypes();
         console.log(this.questions);
+        this.isLoading = false;
       } else {
         console.error('Unexpected response structure:', response);
+        this.isLoading = false;
       }
     });
   }
@@ -120,6 +125,7 @@ export class QuestionComponent implements OnInit{
     this.apiService.getCompletionStats(this.assessmentID, this.ClassID).subscribe((stats: any) => {
       this.completedCount = stats.completed;
       this.totalStudents = stats.total;
+      this.isLoading = false;
     });
   }
 
@@ -129,7 +135,6 @@ export class QuestionComponent implements OnInit{
 
   editQuestion(id: any) {
     this.isEditing = true;
-    this.isSubmitting = true; // Disable the button
     this.selectedQuestion = this.questions.find((q: any) => q.question_id === id);
   
     // Pre-fill the form fields with selected question data
@@ -184,9 +189,8 @@ addQuestion() {
     options: this.getOptions()
   };
 
-  this.isSubmitting = true; // Disable the button
-
   if (this.isEditing) {
+    this.isSubmitting = true; // Disable the button
     // Update existing question
     this.apiService.editQuestion(questionPayload).subscribe(
       (response: any) => {
@@ -217,8 +221,10 @@ addQuestion() {
       });
       this.isSubmitting = false;
       return;
-    }    
+    }  
+    // this.isSubmitting = true; // Disable the button  
     // Add new question
+    this.isSubmitting = true;
     this.apiService.createQuestion(questionPayload).subscribe(
       (response: any) => {
         const newQuestion = {

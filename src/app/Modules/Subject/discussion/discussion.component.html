@@ -50,7 +50,7 @@
       <div class="answer-form" *ngIf="!isLoading">
           <form [formGroup]="discussionForm" (ngSubmit)="submitAnswer()">
               <textarea formControlName="answer" placeholder="Insert text here..."></textarea>
-              <button type="submit">Reply</button>
+              <button type="submit" class="btn-primary" [disabled]="isSubmitting">Reply</button>
           </form>
       </div>
   </div>

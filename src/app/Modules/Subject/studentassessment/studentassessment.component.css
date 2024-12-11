@@ -194,6 +194,41 @@ tbody tr:hover {
     font-size: 1.5rem;
 }
 
+.assessment-list {
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+.assessment-row {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out items evenly */
+  align-items: center; /* Center items vertically */
+  padding: 10px; /* Add some padding */
+  border-bottom: 1px solid #ccc; /* Optional: Add a bottom border for separation */
+}
+
+.assessment-title {
+  flex: 1; /* Allow each title to grow equally */
+  text-align: left; /* Align text to the left */
+}
+
+.assessment-checkbox {
+  margin-left: 10px; /* Space between title and checkbox */
+  width: 20px; 
+  height: 20px;
+}
+
+.finished {
+  color: green;
+  font-weight: bold;
+}
+
+.not-finished {
+  color: red;
+  font-weight: bold;
+}
+
 .spinner {
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #3498db; /* Blue */
@@ -208,7 +243,6 @@ tbody tr:hover {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 
 @media (max-width: 768px) {
     .container {

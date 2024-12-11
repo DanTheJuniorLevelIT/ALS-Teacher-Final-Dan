@@ -16,6 +16,7 @@ import { ViewfileComponent } from './viewfile/viewfile.component';
 import { AddmatComponent } from './addmat/addmat.component';
 import { UpdateLessonComponent } from './update-lesson/update-lesson.component';
 import { UploadComponent } from './upload/upload.component';
+import { StudentassessmentComponent } from './studentassessment/studentassessment.component';
 
 export const subjectRoute: Routes = [
     { path: 'main', component: SubjectmainComponent,
@@ -25,6 +26,7 @@ export const subjectRoute: Routes = [
                 children: [
                     { path: 'modules', component: ModulesComponent },
                     { path: 'students', component: StudentsComponent },
+                    { path: 'students/:lrn/details', component: StudentassessmentComponent},
                     { path: 'assessments', component: AssessmentComponent },
                     { path: 'modules/:moduleid/mat', component: MatComponent }, // Dynamic moduleid for mat
                     { path: 'modules/:moduleid/addmat', component: AddmatComponent },

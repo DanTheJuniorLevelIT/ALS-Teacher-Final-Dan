@@ -264,6 +264,12 @@ a.active .nav-btn {
   .answer-form button:hover {
     background-color: #0056b3;
   }
+
+  .btn-primary:disabled {
+    background-color: #d6d6d6; /* Gray */
+    color: #a1a1a1; /* Lighter gray text */
+    cursor: not-allowed;
+  }
   
 
 /* Modal Style */
