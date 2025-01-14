@@ -62,32 +62,6 @@ export class MatComponent implements OnInit{
 
   isModalOpen2 = false;
 
-  //OLD
-  // ngOnInit(): void {
-  //   this.loadMaterials();
-  //   // Retrieve the subjectID from localStorage
-  //   this.loadAssessments();
-  //   // this.countDiscussion(this.lessons.lesson_id);
-  //   const storedSubjectID = localStorage.getItem('classid');
-  //   const storedModuleID = localStorage.getItem('moduleid');
-  //   const storedModuleTitle = localStorage.getItem('moduletitle');
-  //   if (storedSubjectID) {
-  //     this.subjectID = +storedSubjectID;  // Convert the string to a number
-  //     this.moduleID = storedModuleID;  // Convert the string to a number
-  //     this.moduleTitle = storedModuleTitle;  // Convert the string to a number
-  //     // this.getLessons(this.moduleID);
-  //     this.showLessons(this.moduleID);
-  //     console.log('Retrieved Subject ID from localStorage:', this.subjectID);
-  //   } else {
-  //     console.error('No subjectID found in localStorage.');
-  //   }
-  //   this.route.fragment.subscribe((fragment: any) => {
-  //     if (fragment) {
-  //         this.viewportScroller.scrollToAnchor(fragment);
-  //     }
-  // });
-  // }
-
   //NEW
   ngOnInit(): void {
     this.isLoading = true; // Show the loader at the start
@@ -104,7 +78,6 @@ export class MatComponent implements OnInit{
   
       // Load lessons and their related assessments
       this.loadMaterials(this.moduleID);
-      // this.showLessons(this.moduleID);
     } else {
       console.error('No subjectID found in localStorage.');
     }
@@ -119,16 +92,6 @@ export class MatComponent implements OnInit{
     // Load assessments
     this.loadAssessments();
   }
-
-  //OLD
-  // loadMaterials() {
-  //   this.isLoading = true; // Show the loader before the data is loaded
-
-  //   // Simulate data fetching (you can replace this with an actual service call)
-  //   setTimeout(() => {
-  //     this.isLoading = false; // Hide the loader after data is fetched
-  //   }, 1000); // Simulated delay of 3 seconds
-  // }
 
   //NEW
   loadMaterials(id:any): void {
@@ -163,24 +126,6 @@ export class MatComponent implements OnInit{
       .map(paragraph => `<p>${paragraph}</p>`) // Wrap each transformed paragraph in <p> tags
       .join(''); // Join all paragraphs together
   }
-
-  //OLD
-  // showLessons(id: any){
-  //   this.apiService.getLessons(id).subscribe((response: any) => {
-  //     this.lessons = response.lessons;
-  //     // this.countDiscussion(response.lessonid);
-  //     console.log('Lesson: ', this.lessons);
-  //     console.log('Lessonid: ', response.lessonid);
-
-  //     // After getting lessons, map assessments to each lesson
-  //     this.lessons.forEach((lesson: any) => {
-  //       this.countDiscussion(lesson);
-  //       lesson.filteredAssessments = this.assess.filter(
-  //         (a: any) => a.lesson_id === lesson.lesson_id
-  //       );
-  //     });
-  //   });
-  // }
 
   //NEW
   showLessons(id: any): void {
@@ -224,26 +169,6 @@ export class MatComponent implements OnInit{
       }
     );
   }
-
-  //OLD
-  // loadAssessments(){
-  //   this.apiService.getAssessment().subscribe(
-  //     (response: any) => {
-  //       const today = new Date();
-  //       this.assess = response;
-  //       console.log(this.assess);
-
-  //       this.lessons.forEach((lesson: any) => {
-  //         lesson.filteredAssessments = this.assess.filter(
-  //           (a: any) => a.lesson_id === lesson.lesson_id
-  //         );
-  //       });
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching users:', error);
-  //     }
-  //   );
-  // }
 
   //NEW
   loadAssessments(): void {
@@ -334,8 +259,6 @@ checkLoadingComplete(): void {
             });
           this.loadAssessments();
           this.closeModal2(); // Close the modal
-          // Optionally, navigate to another page
-          // this.router.navigate(['/some-route']);
           this.isSubmitting = false;
         },
         error => {
@@ -396,7 +319,6 @@ checkLoadingComplete(): void {
     localStorage.setItem('lessTitle', lessTitle);
 
     // Navigate to the modules page
-    // this.route.navigate(['/main/Subject/main/subject/modulesmain', subjectID, 'modules']);
     this.router.navigate(['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', this.moduleID, 'assess', 'question', assID]);
   }
 
@@ -404,7 +326,6 @@ checkLoadingComplete(): void {
     this.selectLessonID = modules_id;
     console.log('Selected Lesson ID', this.selectLessonID);
     localStorage.setItem('Lesson Id', this.selectLessonID )
-    // this.router.navigate(['/main/subject', this.subjectID, 'modules', this.moduleID, 'upadateLesson', lessonID]);
   }
 
   uploadFile(modules_id: any) {
@@ -432,7 +353,6 @@ checkLoadingComplete(): void {
             // Success response handling
             console.log('Lesson deleted:', response);
             // Remove the deleted lesson from the list
-            // this.lessons = this.lessons.filter((lesson: any) => lesson.lesson_id !== lesson.lesson_id);
             this.showLessons(this.moduleID);
             this.cdr.detectChanges();
   
@@ -531,7 +451,6 @@ checkLoadingComplete(): void {
             description: assessment.description,
             due_date: assessment.due_date,
         });
-        // localStorage.setItem('aid', assessment.assessmentid)
         this.isEditModalOpen = true;
     });
   }
@@ -542,7 +461,6 @@ checkLoadingComplete(): void {
   
   // Save edited assessment
   saveEditedAssessment() {
-    // console.log(localStorage.getItem('aid'));
     if (this.editAssessmentForm.valid) {
         const updatedAssessment = this.editAssessmentForm.value;
         this.apiService.updateAssessment(updatedAssessment.assessmentID, updatedAssessment).subscribe(

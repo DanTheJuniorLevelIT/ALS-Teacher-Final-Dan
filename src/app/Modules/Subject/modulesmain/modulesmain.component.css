@@ -37,19 +37,12 @@ ul {
 
 ul li {
     padding: 5px 0;
-    /* border-bottom: 1px solid #ccc; */
     color: #000; /* Opaque text */
 }
 
 .add-announcement {
     margin-top: 10px;
 }
-
-/* .add-announcement input {
-    width: 80%;
-    padding: 5px;
-    margin-right: 5px;
-} */
 
 .add-announcement textarea {
     margin-top: 5px;
@@ -95,17 +88,6 @@ ul li {
     margin: 0;
     color: #666;
 }
-
-/* .right-section ul {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-}
-
-.right-section ul li {
-    margin-left: 20px;
-} */
 
 .right-section ul li a {
     text-decoration: none;
@@ -267,7 +249,6 @@ ul li {
         width: 100%; /* Full width for mobile */
         margin-top: 10px; /* Spacing between sections */
         display: flex;
-        /* justify-content: center; */
         gap: 15px;
     }
 

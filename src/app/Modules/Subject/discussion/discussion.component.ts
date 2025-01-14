@@ -150,26 +150,5 @@ export class DiscussionComponent implements OnInit {
       this.isSubmitting = false;
     });
   }
-
-  // submitAnswer() {
-  //   const newAnswer = this.discussionForm.value.answer;
-  //   const storedTeacherID = localStorage.getItem('id');
-  
-  //   const payload = {
-  //     discussionid: this.discussuinID,
-  //     lrn: null,
-  //     adminID: storedTeacherID,
-  //     reply: newAnswer
-  //   };
-  
-  //   this.apiService.sendDiscussionReplies(payload).subscribe((response: any) => {
-  //     // Clear cache for this discussion
-  //     localStorage.removeItem(`discussion_replies_${this.discussuinID}`);
-  //     localStorage.removeItem(`discussion_replies_timestamp_${this.discussuinID}`);
-  
-  //     this.loadDiscussions(this.discussuinID); // Reload replies
-  //     this.discussionForm.reset();
-  //   });
-  // }
 }
 

@@ -94,7 +94,6 @@ export class AssessmentComponent implements OnInit{
             description: assessment.description,
             due_date: assessment.due_date,
         });
-        // localStorage.setItem('aid', assessment.assessmentid)
         this.isEditModalOpen = true;
     });
   }
@@ -105,7 +104,6 @@ export class AssessmentComponent implements OnInit{
 
   saveEditedAssessment() {
     this.isSubmitting = true;
-    // console.log(localStorage.getItem('aid'));
     if (this.editAssessmentForm.valid) {
         const updatedAssessment = this.editAssessmentForm.value;
         this.apiService.updateAssessment(updatedAssessment.assessmentID, updatedAssessment).subscribe(
@@ -131,27 +129,6 @@ export class AssessmentComponent implements OnInit{
     }
   }
 
-  // loadAssessmentss(): void {
-  //   this.apiService.getAssessment().subscribe(
-  //     (response: any) => {
-  //       this.assess = response; // Assign assessments
-  //       console.log('Assessments:', this.assess);
-  
-  //       this.lessons.forEach((lesson: any) => {
-  //         lesson.filteredAssessments = this.assess.filter(
-  //           (a: any) => a.lesson_id === lesson.lesson_id
-  //         );
-  //       });
-  
-  //       // this.checkLoadingComplete(); // Check if loading is complete
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching assessments:', error);
-  //       // this.checkLoadingComplete(); // Ensure loader hides even on error
-  //     }
-  //   );
-  // }
-
   navigateToQuestions(assID: number, lessTitle: any) {
     const storedSubjectID = localStorage.getItem('classid');
     // Store the subjectID in localStorage
@@ -159,7 +136,6 @@ export class AssessmentComponent implements OnInit{
     localStorage.setItem('lessTitle', lessTitle);
 
     // Navigate to the modules page
-    // this.route.navigate(['/main/Subject/main/subject/modulesmain', subjectID, 'modules']);
     this.router.navigate(['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', this.moduleID, 'assess', 'question', assID]);
   }
 
@@ -171,7 +147,6 @@ export class AssessmentComponent implements OnInit{
     localStorage.setItem('assessTitle', assessTitle);
 
     // Navigate to the modules page
-    // this.route.navigate(['/main/Subject/main/subject/modulesmain', subjectID, 'modules']);
     this.router.navigate(['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', this.moduleID, 'assess', 'question', assID, 'progress']);
   }
 

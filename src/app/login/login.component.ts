@@ -68,20 +68,16 @@ export class LoginComponent implements OnInit{
             this.route.navigate(['/main/Home/']);
           }else{
             console.error('Invalid Login');
-            // alert('Incorrect Email or Password');
             Swal.fire({
               title: "Invalid Login",
-              // text: "Fill out the Email and Password",
               icon: "error"
             });
           }
         },
         error => {
           console.error('Error logging in:', error);
-          // alert('Invalid Email or Password');
           Swal.fire({
             title: "The Provided Credentials are incorrect",
-            // text: "Fill out the Email and Password",
             icon: "error"
           });
           this.loginForm.reset();
@@ -89,7 +85,6 @@ export class LoginComponent implements OnInit{
       );
     } else {
       console.error('Form is not valid');
-      // alert('Form is not valid');
       Swal.fire({
         title: "Form is not Valid",
         text: "Fill out the Email and Password",

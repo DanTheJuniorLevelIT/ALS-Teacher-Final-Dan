@@ -33,34 +33,12 @@ export class MessageComponent implements OnInit{
   replyText: string = '';
 
   viewConvoMessage(msg: any) {
-    // this.selectedMessage = msg;
-    // this.selectedMessageID = msg.messageid;
-    // this.isModalOpen3 = true;
     const fullName = `${msg.firstname} ${msg.lastname}`;
     localStorage.setItem('lrn', msg.lrn);
     localStorage.setItem('learner', fullName);
 
     this.route.navigate(['/main/Message/main/message/view']);
   }
-
-  // viewConvoMessage(msg: any) {
-  //   const fullName = `${msg.firstname} ${msg.lastname}`;
-  //   localStorage.setItem('lrn', msg.lrn);
-  //   localStorage.setItem('learner', fullName);
-  
-  //   // Call API to mark all messages as read
-  //   this.apiserve.markAllMessagesAsRead(this.admin.adminID, msg.lrn).subscribe(
-  //     (response) => {
-  //       console.log('All messages marked as read:', response);
-  //       // Navigate to the detailed message view
-  //       this.route.navigate(['/main/Message/main/message/view']);
-  //     },
-  //     (error) => {
-  //       console.error('Error updating messages status:', error);
-  //     }
-  //   );
-  // }
-  
 
   sendReply(lrn: any) 
   {
@@ -76,7 +54,6 @@ export class MessageComponent implements OnInit{
           this.apiserve.sendReply(replyPayload).subscribe(
               response => {
                   console.log('Reply sent successfully:', response);
-                  // alert('Reply sent successfully!');
                   Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -119,11 +96,9 @@ export class MessageComponent implements OnInit{
     this.student(adminid);
 
     this.admin = this.getAdminDetails();
-    // this.loadMessage(adminid);
 
     this.spinner();
 
-    // Set an interval to refresh discussions every 30 seconds
     this.intervalId = setInterval(() => {
       this.loadMessage(adminid);
     }, 20000); // = 20 seconds
@@ -181,7 +156,6 @@ export class MessageComponent implements OnInit{
     const messageText = (document.getElementById('message') as HTMLTextAreaElement).value;
   
     if (!recipient) {
-      // alert('Please select a recipient.');
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -193,7 +167,6 @@ export class MessageComponent implements OnInit{
     }
   
     if (!messageText.trim()) {
-      // alert('Message cannot be empty.');
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -213,7 +186,6 @@ export class MessageComponent implements OnInit{
     this.apiserve.sendMessage(messagePayload).subscribe(
       response => {
         console.log('Message sent successfully:', response);
-        // alert('Message sent successfully!');
         Swal.fire({
           position: "top-end",
           icon: "success",

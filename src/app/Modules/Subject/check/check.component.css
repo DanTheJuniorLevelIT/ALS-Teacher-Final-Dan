@@ -170,7 +170,6 @@ body {
 
 a.active .nav-btn {
     background-color: #0056b3; 
-    /* box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);  */
 }
 
 .nav-btn:hover {
@@ -229,13 +228,11 @@ a.active .nav-btn {
 
 .hoverable-question {
     cursor: pointer;
-    /* transition: color 0.3s ease, background-color 0.3s ease; */
 }
 
 .hoverable-question:hover {
     color: #007bff; /* Change text color on hover */
     background-color: #f1f1f1; /* Optionally, change background on hover */
-    /* padding: 5px; Add a bit of padding on hover to make it stand out */
     border-radius: 4px; /* Round the edges */
 }
 

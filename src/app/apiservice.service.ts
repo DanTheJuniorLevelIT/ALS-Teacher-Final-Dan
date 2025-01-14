@@ -8,7 +8,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ApiserviceService {
 
   private url = "http://localhost:8000/";
-  // private url = "http://10.0.118.175:8000/";
   token = localStorage.getItem('authToken')
 
   constructor(private http: HttpClient) {}
@@ -231,7 +230,6 @@ export class ApiserviceService {
   createMods(data: any) {
     const headers = {'Authorization': 'Bearer ' + this.token};
     return this.http.post(this.url + 'api/modules/create', data, { headers });
-    // return this.http.post(this.url + 'api/modules/create', data,);
   }
 
   updateModuleDate(id: number, data: any) {

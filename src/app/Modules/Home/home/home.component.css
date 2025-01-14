@@ -112,7 +112,6 @@
   width: 300px;
   height: 350px;  
   margin-bottom: 25px;
-   /* width: calc(50% - 10px); Two cards per row */
 }
 
 .card .card-title {

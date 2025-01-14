@@ -76,7 +76,6 @@ export class HomeComponent implements OnInit{
     const id = localStorage.getItem('id');
     this.teacherid = id;
     this.loadMessage(id);
-    // this.apiserv.getSubjects().subscribe(
     this.apiserv.getTeacherSubjects(this.teacherid).subscribe(
       (response: any) => {
         this.sub = response.subject;
@@ -84,7 +83,6 @@ export class HomeComponent implements OnInit{
         console.log(this.sub);
         console.log(this.shl);
         this.isLoading = false; 
-        // console.log(this.sub.school);
       },
       (error) => {
         console.error('Error fetching users:', error);

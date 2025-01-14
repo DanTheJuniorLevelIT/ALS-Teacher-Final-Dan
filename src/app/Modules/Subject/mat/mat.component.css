@@ -15,7 +15,6 @@ body {
 
 .button-group {
     display: flex;
-    /* justify-content: center; Center the buttons */
     margin-bottom: 20px;
 }
 
@@ -68,7 +67,6 @@ body {
 
 .card {
     margin: 0 auto; /* Center cards */
-    /* margin-top: 40px; */
     width: 100%; /* Full width */
 }
 
@@ -201,16 +199,8 @@ body {
     text-decoration: underline;
 } 
 
-/* .container {
-    display: flex;
-    gap: 20px;
-} */
-
 .col-5 {
     flex: 0 0 40%; /* Adjusted for 5 columns out of 12 */
-    /* background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 .sticky-toc {

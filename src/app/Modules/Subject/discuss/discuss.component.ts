@@ -105,14 +105,6 @@ export class DiscussComponent implements OnInit{
       this.closeModal();
       this.loadDiscussion(this.lessonid);
       this.createDiscussion.get('discussion_topic')?.reset();
-      // this.route.queryParams.subscribe(params => {
-      //   const lessonId = params['lessonId'];
-      //   const lessTitle = params['lessTitle'];
-      //   this.lessonTitle = lessTitle;
-      //   if (lessonId) {
-      //       this.loadDiscussion(lessonId);
-      //   }
-      // });
       this.isSubmitting = false;
     })
   }

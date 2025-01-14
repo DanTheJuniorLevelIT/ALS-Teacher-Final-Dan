@@ -118,7 +118,6 @@ export class ViewfileComponent implements OnInit {
     this.apiserv.updateScore(payload).subscribe(
       (response: any) => {
         if (response.status === 'success') {
-          // console.log('Essay score added successfully');
           Swal.fire({
             title: "Updated Score",
             icon: "success"

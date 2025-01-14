@@ -54,7 +54,6 @@ export class StudentassessmentComponent implements OnInit{
     localStorage.setItem('lname', this.lname);
 
     // Navigate to the modules page
-    // this.route.navigate(['/main/Subject/main/subject/modulesmain', subjectID, 'modules']);
     this.route.navigate(['/main/Subject/main/subject/modulesmain', this.classid, 'modules', this.moduleID, 'assess', 'question', assID, 'checking']);
   }
 

@@ -129,10 +129,6 @@ export class QuestionComponent implements OnInit{
     });
   }
 
-  // editQuestion(id: any){
-    
-  // }
-
   editQuestion(id: any) {
     this.isEditing = true;
     this.selectedQuestion = this.questions.find((q: any) => q.question_id === id);
@@ -214,7 +210,6 @@ addQuestion() {
     );
   } else {
     if (this.questionType === 'multiple-choice' && this.getOptions().length < 2) {
-      // alert('Please enter at least two valid options.');
       Swal.fire({
         title: "Please enter at least two valid options.",
         icon: "warning"
@@ -222,7 +217,6 @@ addQuestion() {
       this.isSubmitting = false;
       return;
     }  
-    // this.isSubmitting = true; // Disable the button  
     // Add new question
     this.isSubmitting = true;
     this.apiService.createQuestion(questionPayload).subscribe(
@@ -239,7 +233,6 @@ addQuestion() {
           title: "Added New Question",
           icon: "success"
         });
-        // this.questions.push(newQuestion);
         this.loadQuestions();
         this.getTotalPoints();
         this.closeModal();
@@ -306,7 +299,6 @@ navigateToProgress(title: any) {
   // Store the ClassID in localStorage
 
   // Navigate to the modules page
-  // this.route.navigate(['/main/Subject/main/subject/modulesmain', ClassID, 'modules']);
   this.router.navigate(['/main/Subject/main/subject/modulesmain', storedClassID, 'modules', this.moduleID, 'assess', 'question', storedAssessmentID, 'progress']);
 }
 

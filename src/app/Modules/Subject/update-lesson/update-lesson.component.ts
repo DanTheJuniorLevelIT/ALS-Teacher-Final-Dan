@@ -26,12 +26,6 @@ export class UpdateLessonComponent  implements OnInit{
   updateLessonForm: FormGroup;
   tinyMCEEditor: any;
   
-  // updateLessonFormForm = new FormGroup({
-  //   modules_id: new FormControl(localStorage.getItem('moduleid')),
-  //   topic_title: new FormControl(null),
-  //   lesson: new FormControl(null),
-  // }); 
-  
   constructor(
     private apiserv: ApiserviceService, 
     private router: Router, 

@@ -32,7 +32,6 @@ export class ViewmessageComponent implements OnInit{
     this.NameLearner = localStorage.getItem('learner');
     this.lrnLearner = localStorage.getItem('lrn'); // Replace with dynamic LRN
     this.adminID = localStorage.getItem('id'); // Replace with dynamic LRN
-    // this.loadConversation(this.lrnLearner);
     const admin = this.getAdminDetails();
 
     this.currentUser = `${admin.firstname} ${admin.lastname}`;

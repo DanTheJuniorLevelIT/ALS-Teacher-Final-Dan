@@ -62,7 +62,6 @@ loadStudents(){
     (data: any) => {
       this.students = data.status;
       this.totalPoints = data.total_points; 
-      // this.students = data.score;
       console.log("Students: ", data.status);
       this.isLoading = false;
     },

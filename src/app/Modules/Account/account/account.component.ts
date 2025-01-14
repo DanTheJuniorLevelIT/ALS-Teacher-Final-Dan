@@ -110,8 +110,6 @@ export class AccountComponent implements OnInit{
     this.apiserve.uploadProfilePicture(formData, this.id).subscribe((result: any) => {
       //Local
       const newImageUrl = `http://localhost:8000/storage/profile_pictures/${result.image_name}`;
-      //Server
-      // const newImageUrl = `http://10.0.118.175:8000/storage/profile_pictures/${result.image_name}`;
       localStorage.setItem('profile_picture', newImageUrl);
       console.log(result);
       this.isUploading = true;
@@ -133,10 +131,6 @@ export class AccountComponent implements OnInit{
           this.apiserve.updateProfilePic(newImageUrl);
         }
       }, 100);
-      // Update the learner's image path to point to the Laravel assets folder
-      // this.profilePicOfStudent.image = `http://localhost:8000/assets/profile_pictures/${result.image_name}`;
-      // console.log(this.profilePicOfStudent);
-      // this.getLearnerInfo(this.id);
     })
   }
 
@@ -146,7 +140,6 @@ export class AccountComponent implements OnInit{
       this.apiserve.updateAdminPassword(this.updateForm.value, this.id).subscribe(
         (result: any) => {
           if (result && result.message === 'Password updated successfully') {
-            // SweetAlert2 success message
             Swal.fire({
               position: "center",
               icon: "success",
@@ -156,12 +149,10 @@ export class AccountComponent implements OnInit{
             });
             this.updateForm.reset();
           } else {
-            // Handle unexpected response structure
             console.log('Unexpected response:', result);
           }
         },
         (error) => {
-          // Handle error response from the server
           if (error.status === 400) {
             Swal.fire({
               position: "center",
@@ -182,7 +173,6 @@ export class AccountComponent implements OnInit{
         }
       );
     } else {
-      // Invalid form submission error message
       Swal.fire({
         position: "center",
         icon: "warning",

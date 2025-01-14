@@ -140,11 +140,6 @@
     cursor: not-allowed;
 }
 
-/* .icon-container {
-    display: flex;
-    align-items: center; 
-} */
-
 .separator {
     margin: 0 10px; /* Adjust spacing around the separator */
 }

@@ -73,7 +73,6 @@ body {
 }
 
 .header h1 {
-    /* color: #666; */
     margin-bottom: 20px;
 }
 
@@ -99,23 +98,6 @@ body {
 .nav-btn:hover {
     background-color: #0056b3;
 }
-
-/* .modules {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-} */
-
-/* .module {
-    text-align: center;
-} */
-
-/* .module-header {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-} */
 
 .lesson-topic {
     font-size: 1.2em;

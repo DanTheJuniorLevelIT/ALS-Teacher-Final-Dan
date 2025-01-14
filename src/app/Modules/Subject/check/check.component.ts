@@ -109,7 +109,6 @@ export class CheckComponent implements OnInit {
     this.apiserv.submitScore(payload).subscribe(
       (response: any) => {
         if (response.status === 'success') {
-          // console.log('Essay score added successfully');
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",

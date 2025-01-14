@@ -24,12 +24,6 @@ export class AddmatComponent implements OnInit {
 
   createLesson: FormGroup;
 
-  // createLesson = new FormGroup({
-  //   modules_id: new FormControl(localStorage.getItem('moduleid')),
-  //   topic_title: new FormControl(null),
-  //   lesson: new FormControl(null),
-  // });
-
   constructor(
     private apiService: ApiserviceService,
     private route: Router,
