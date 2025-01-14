@@ -31,6 +31,7 @@
                 <a [routerLink]="['/main/Message']" (click)="closeNavbar()" routerLinkActive="active">
                     <span class="icon"><i class="fa fa-comments-o fa-2x" aria-hidden="true"></i></span>
                     <span class="item">Messages</span>
+                    <span *ngIf="unreadCount > 0" class="badge"></span>
                 </a>
             </li>
             <li>

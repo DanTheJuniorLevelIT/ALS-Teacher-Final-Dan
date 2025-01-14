@@ -126,6 +126,15 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .badge {
+    background-color: #007bff;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 5px;
+  }
   
   /* Modal styles */
   .modal {

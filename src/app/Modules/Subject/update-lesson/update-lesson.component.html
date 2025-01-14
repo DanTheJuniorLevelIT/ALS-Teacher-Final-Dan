@@ -8,7 +8,18 @@
       
       <div class="input-group2">
         <label class="label2" for="lesson">Lesson</label>
-        <textarea formControlName="lesson" autocomplete="off" name="lesson" id="lesson" class="textarea-input" rows="8" required></textarea>
+        <!-- <textarea formControlName="lesson" autocomplete="off" name="lesson" id="lesson" class="textarea-input" rows="8" required></textarea> -->
+        <editor
+            apiKey="1wgw3bs1rmt6dd6ewh1l74jf5flshftxbyz2p3mlqosec3o7"
+            [init]="{
+            height: 300,
+            menubar: false,
+            plugins: 'link lists image table code',
+            toolbar:
+                'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code'
+            }"
+            (onInit)="onEditorInit($event)"
+        ></editor>
       </div>
       
       <div>

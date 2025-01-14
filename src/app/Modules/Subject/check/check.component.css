@@ -10,6 +10,41 @@ body {
     padding: 20px;
 }
 
+.answers-container {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .answer-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .answer-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-rows: auto auto auto; /* Separate rows for question, student answer, and key answer */
+    gap: 10px;
+  }
+  
+  .question-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .student-answer {
+    margin-top: 5px;
+  }
+  
+  .key-answer {
+    margin-top: 5px;
+    font-style: italic;
+    color: #555;
+  } 
+
 .sidebar {
     width: 300px;
     height: 600px;

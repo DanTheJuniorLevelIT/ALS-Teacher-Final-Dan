@@ -7,11 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ApiserviceService } from '../../../apiservice.service';
 import { HttpClient } from '@angular/common/http';
+import { EditorComponent } from '@tinymce/tinymce-angular';
 
 @Component({
   selector: 'app-update-lesson',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule, EditorComponent],
   templateUrl: './update-lesson.component.html',
   styleUrl: './update-lesson.component.css'
 })
@@ -21,12 +22,15 @@ export class UpdateLessonComponent  implements OnInit{
   lesson:any;
   fileName: string | null = null;
   selectedFile: File | null = null;
+
+  updateLessonForm: FormGroup;
+  tinyMCEEditor: any;
   
-  updateLessonForm = new FormGroup({
-    modules_id: new FormControl(localStorage.getItem('moduleid')),
-    topic_title: new FormControl(null),
-    lesson: new FormControl(null),
-  }); 
+  // updateLessonFormForm = new FormGroup({
+  //   modules_id: new FormControl(localStorage.getItem('moduleid')),
+  //   topic_title: new FormControl(null),
+  //   lesson: new FormControl(null),
+  // }); 
   
   constructor(
     private apiserv: ApiserviceService, 
@@ -34,7 +38,13 @@ export class UpdateLessonComponent  implements OnInit{
     private route: ActivatedRoute,
     private http: HttpClient,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    this.updateLessonForm = new FormGroup({
+      modules_id: new FormControl(localStorage.getItem('moduleid')),
+      topic_title: new FormControl(null),
+      lesson: new FormControl(null),
+    });
+  }
   
   ngOnInit(): void {
     const lesson_id = localStorage.getItem('Lesson Id');
@@ -45,6 +55,11 @@ export class UpdateLessonComponent  implements OnInit{
       console.log(result);
       this.updateLessonForm.controls['topic_title'].setValue(this.lesson[0].topic_title);
       this.updateLessonForm.controls['lesson'].setValue(this.lesson[0].lesson );
+
+      // Set the content of the TinyMCE editor manually
+      if (this.tinyMCEEditor) {
+        this.tinyMCEEditor.setContent(this.lesson[0].lesson || '');
+      }
       this.fileName = this.lesson[0].file || null; 
     })
   }
@@ -56,6 +71,21 @@ export class UpdateLessonComponent  implements OnInit{
       this.fileName = file.name;  
     }
   }
+
+  onEditorInit(event: any): void {
+    // Save the editor instance
+    this.tinyMCEEditor = event.editor;
+  
+    // Set the initial content if the lesson data is already loaded
+    const initialContent = this.updateLessonForm.get('lesson')?.value || '';
+    this.tinyMCEEditor.setContent(initialContent);
+  
+    // Update FormControl on content change
+    this.tinyMCEEditor.on('keyup change', () => {
+      this.updateLessonForm.get('lesson')?.setValue(this.tinyMCEEditor.getContent());
+    });
+  }
+
   update() {
     const storedSubjectID = localStorage.getItem('classid');
     const storedModuleID = localStorage.getItem('moduleid');

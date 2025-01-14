@@ -22,27 +22,17 @@
             </div>
             <tbody *ngIf="!isLoading">
                 <tr *ngFor="let msg of messages" (click)="viewConvoMessage(msg)">
-                    <td>{{ (msg.lastname + ', ' + msg.firstname) }}</td> <!-- Use sender_name -->
+                    <td>
+                        {{ (msg.lastname + ', ' + msg.firstname) }}
+                        <!-- Unread Badge -->
+                        <span class="badge badge-primary" *ngIf="msg.unread_count > 0">{{ msg.unread_count }}</span>
+                    </td>
                     <td>{{ msg.messages }}</td>
                     <td>{{ msg.created_at | date:'MMMM d, y, h:mm a' }}</td>
                 </tr>
             </tbody>
         </table>          
     </div>
-    
-    <!-- <div class="modal" [ngClass]="{'show': isModalOpen3}" (click)="closeModal3()">
-        <div class="modal-content3" (click)="$event.stopPropagation()">
-            <span class="close" (click)="closeModal3()">&times;</span>
-            <h4>Message from <b>{{ selectedMessage?.sender_name || (selectedMessage?.lastname + ', ' + selectedMessage?.firstname) }}</b></h4>
-            <h3>{{ selectedMessage?.messages }}</h3>
-    
-            <div class="reply-box">
-                <textarea [(ngModel)]="replyText" placeholder="Type your reply..."></textarea>
-                <button class="btn-primary" (click)="sendReply(selectedMessage?.lrn)" [disabled]="isSubmitting">Send</button>
-            </div>
-        </div>
-    </div> -->
-    
 </div>
 
 <!-- Compose Message Modal -->

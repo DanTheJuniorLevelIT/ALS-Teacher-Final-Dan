@@ -317,10 +317,21 @@ checkLoadingComplete(): void {
       this.apiService.createAssess(this.createAssessment.value).subscribe(
         response => {
           console.log('Assessment created:', response);
-          Swal.fire({
-            title: "Added New Assessment",
-            icon: "success"
-          });
+          const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Added new assessment"
+            });
           this.loadAssessments();
           this.closeModal2(); // Close the modal
           // Optionally, navigate to another page
@@ -538,9 +549,20 @@ checkLoadingComplete(): void {
             (response: any) => {
                 console.log('Assessment updated successfully', response);
                 this.loadAssessments(); // Refresh the list
-                Swal.fire({
-                  title: "Updated Assessment",
-                  icon: "success"
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  timer: 1000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                  }
+                });
+                Toast.fire({
+                  icon: "success",
+                  title: "Updated assessment"
                 });
                 this.isEditModalOpen = false; // Close modal
             },

@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 })
 export class MessageComponent implements OnInit{
 
+  admin: any;
+
   isLoading: boolean = false; // This controls the loader visibility
   isSubmitting: boolean = false; // Tracks submission state
 
@@ -40,6 +42,25 @@ export class MessageComponent implements OnInit{
 
     this.route.navigate(['/main/Message/main/message/view']);
   }
+
+  // viewConvoMessage(msg: any) {
+  //   const fullName = `${msg.firstname} ${msg.lastname}`;
+  //   localStorage.setItem('lrn', msg.lrn);
+  //   localStorage.setItem('learner', fullName);
+  
+  //   // Call API to mark all messages as read
+  //   this.apiserve.markAllMessagesAsRead(this.admin.adminID, msg.lrn).subscribe(
+  //     (response) => {
+  //       console.log('All messages marked as read:', response);
+  //       // Navigate to the detailed message view
+  //       this.route.navigate(['/main/Message/main/message/view']);
+  //     },
+  //     (error) => {
+  //       console.error('Error updating messages status:', error);
+  //     }
+  //   );
+  // }
+  
 
   sendReply(lrn: any) 
   {
@@ -96,6 +117,8 @@ export class MessageComponent implements OnInit{
   ngOnInit(): void {
     const adminid = localStorage.getItem('id');
     this.student(adminid);
+
+    this.admin = this.getAdminDetails();
     // this.loadMessage(adminid);
 
     this.spinner();
@@ -104,6 +127,11 @@ export class MessageComponent implements OnInit{
     this.intervalId = setInterval(() => {
       this.loadMessage(adminid);
     }, 20000); // = 20 seconds
+  }
+
+  getAdminDetails() {
+    const details = localStorage.getItem('adminDetails');
+    return details ? JSON.parse(details) : null;
   }
 
   ngOnDestroy(): void {

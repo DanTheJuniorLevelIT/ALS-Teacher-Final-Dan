@@ -55,7 +55,7 @@
           </p>
 
           <!-- Loop through the questions array -->
-          <div *ngIf="studentAnswers.length">
+          <!-- <div *ngIf="studentAnswers.length">
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr>
@@ -67,12 +67,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let answer of studentAnswers; let i = index" style="border: 1px solid #ddd;">
-                        <!-- Score Column -->
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
                             <span *ngIf="answer.type === 'true-false' || answer.type === 'multiple-choice'">
                                 {{ answer.score || 0 }}/{{ answer.points }}
                             </span>
-                            <!-- Editable Score for other types -->
                             <span *ngIf="answer.type !== 'true-false' && answer.type !== 'multiple-choice'">
                                 <input
                                     style="width: 20px; text-align: center;"
@@ -83,22 +81,18 @@
                             </span>
                         </td>
         
-                        <!-- Answer Column -->
                         <td style="border: 1px solid #ddd; padding: 8px;">
                             <span *ngIf="answer.type !== 'Essay'" style="color: blue;">
                                 <u>{{ answer.student_answer }}</u>
                             </span>
-                            <!-- Essay Answer -->
                             <textarea *ngIf="answer.type === 'Essay'" 
                                       style="width: 100%; height: 60px;" 
                                       [value]="answer.student_answer" 
                                       disabled></textarea>
                         </td>
         
-                        <!-- Question Number Column -->
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">{{ i + 1 }}.</td>
         
-                        <!-- Question and Key Answer Column -->
                         <td style="border: 1px solid #ddd; padding: 8px;">
                             <strong>{{ answer.question }}</strong>
                             <br>
@@ -107,7 +101,53 @@
                     </tr>
                 </tbody>
             </table>
-        </div>         
+        </div>          -->
+
+        <div *ngIf="studentAnswers.length" class="answers-container">
+            <ul class="answer-list">
+              <li *ngFor="let answer of studentAnswers; let i = index" class="answer-item">
+                <!-- Question and Score -->
+                <div class="question-score">
+                  <div class="question">
+                    <strong>{{ i + 1 }}. {{ answer.question }}</strong>
+                  </div>
+                  <div class="score">
+                    <span *ngIf="answer.type === 'true-false' || answer.type === 'multiple-choice'">
+                      {{ answer.score || 0 }}/{{ answer.points }}
+                    </span>
+                    <span *ngIf="answer.type !== 'true-false' && answer.type !== 'multiple-choice'">
+                      <input
+                        style="width: 40px; text-align: center;"
+                        type="text"
+                        [(ngModel)]="answer.score"
+                        (blur)="manualCheck(answer.question_id, answer.score)"
+                      /> / {{ answer.points }}
+                    </span>
+                  </div>
+                </div>
+          
+                <!-- Student Answer -->
+                <div class="student-answer">
+                  <span *ngIf="answer.type !== 'Essay'" style="color: blue;">
+                    <u>{{ answer.student_answer }}</u>
+                  </span>
+                  <textarea
+                    *ngIf="answer.type === 'Essay'"
+                    style="width: 100%; height: 60px;"
+                    [value]="answer.student_answer"
+                    disabled
+                  ></textarea>
+                </div>
+          
+                <!-- Key Answer -->
+                <div class="key-answer">
+                  <b>Key Answer:</b> <u>{{ answer.key_answer || 'Essay Type' }}</u>
+                </div>
+              </li>
+            </ul>
+          </div>
+          
+          
         </div>
     </div>
 </div>

@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ApiserviceService } from '../apiservice.service';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { interval } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
@@ -16,6 +19,8 @@ export class MainComponent implements OnInit{
   profile: any;
   admin: any;
 
+  unreadCount: number = 0;
+
   constructor(private api: ApiserviceService, private route: Router){}
 
   ngOnInit(): void {
@@ -24,6 +29,24 @@ export class MainComponent implements OnInit{
     this.tok = authToken;
     localStorage.removeItem('classid');
     this.admin = this.getAdminDetails();
+
+    this.fetchUnreadCount();
+
+    interval(30000).subscribe(() => this.fetchUnreadCount());
+  }
+
+  fetchUnreadCount() {
+    if (this.admin && this.admin.adminID) {
+      this.api.getUnreadCount(this.admin.adminID).subscribe(
+        (count: any) => {
+          this.unreadCount = count;
+          console.log(this.unreadCount);
+        },
+        error => {
+          console.error('Error fetching unread messages count:', error);
+        }
+      );
+    }
   }
 
   getAdminDetails() {

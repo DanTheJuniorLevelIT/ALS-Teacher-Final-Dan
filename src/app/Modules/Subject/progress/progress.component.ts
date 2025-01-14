@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 export class ProgressComponent {
 
   isLoading: boolean = false;
+  isSubmitting: boolean = false;
 
   assessTitle: any;
   lessonTitle: any;
@@ -74,6 +75,7 @@ loadStudents(){
 
 //2nd Approach
 autoCheck() {
+  this.isSubmitting = true;
   this.apiserv.autoCheck(this.subjectID, this.assessmentID).subscribe(
     (response: any) => {
       Swal.fire({
@@ -82,6 +84,7 @@ autoCheck() {
       });
       this.students = response.score;
       this.students = response.status;
+      this.isSubmitting = false;
       // After auto-check, reload the student data to get updated scores
     },
     (error) => {
@@ -90,6 +93,7 @@ autoCheck() {
         title: "Something went wrong!",
         icon: "error"
       });
+      this.isSubmitting = false;
     }
   );
 }

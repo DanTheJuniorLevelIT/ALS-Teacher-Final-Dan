@@ -11,7 +11,7 @@
         <li class="breadcrumb-item active" aria-current="page">Modules</li>
     </ol>
 </nav>
-        <div class="header">
+        <!-- <div class="header">
             <h1>My Modules</h1>
             <div class="notification-icon" (click)="openModal()" *ngIf="!isLoading">
                 <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
@@ -22,7 +22,6 @@
         </div>
         <div *ngIf="!isLoading" class="modules">
             <div class="module" *ngFor="let mod of modules">
-            <!-- Module Title and Date -->
             <a style="font-weight: bold; text-decoration: none; color: #333; font-size: 1rem;" (click)="setModuleID(mod.modules_id, mod.title, mod.description)" [routerLink]="['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', mod.modules_id, 'mat']">
                 <div class="module-header">
                     <div *ngIf="isModuleOpen(mod.date)">
@@ -34,7 +33,6 @@
                     <span class="module-date">{{ mod.date | date }}</span>
                     <button *ngIf="!isModuleOpen(mod.date)" class="open-btn nav-btn2" (click)="forceOpenModule(mod.modules_id)">Open</button>
                 </div>
-                <!-- Module Description -->
                 <div class="module-description">
                     <p>{{ mod.description }}</p>
                 </div>
@@ -48,6 +46,7 @@
         <span class="close" (click)="closeModal()">&times;</span>
         <h1>Add Module</h1>
         <form [formGroup]="createModule" (ngSubmit)="save()">
+            <input hidden formControlName="classid" autocomplete="off" name="title" id="title" class="input" type="text">
             <div class="input-group">
                 <label class="label">Title</label>
                 <input formControlName="title" autocomplete="off" name="title" id="title" class="input" type="text">
@@ -64,4 +63,62 @@
             </div>
         </form>
     </div>
+</div> -->
+
+<div class="header">
+    <h1>My Modules</h1>
+    <div class="notification-icon" (click)="openAddModuleModal()" *ngIf="!isLoading">
+        <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+    </div>
 </div>
+<div class="loader-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+</div>
+<div *ngIf="!isLoading" class="modules">
+    <div class="module" *ngFor="let mod of modules">
+        <!-- Module Title and Date -->
+        <div class="module-header">
+            <a style="font-weight: bold; text-decoration: none; color: #333; font-size: 1rem;" (click)="setModuleID(mod.modules_id, mod.title, mod.description)" [routerLink]="['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', mod.modules_id, 'mat']">
+                <div *ngIf="isModuleOpen(mod.date)">
+                    {{ mod.title }}
+                </div>
+                <span *ngIf="!isModuleOpen(mod.date)" class="closed-module" style="color: gray;">
+                    {{ mod.title }} (Closed)
+                </span>
+            </a>
+                <span class="module-date">{{ mod.date | date }}</span>
+                <button class="edit-btn nav-btn2" (click)="openEditModal(mod)"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></button>
+            </div>
+        <!-- Module Description -->
+        <div class="module-description">
+            <p>{{ mod.description }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Adding/Editing Module -->
+<div class="modal" [ngClass]="{'show': isModalOpen}" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h1>{{ isEditMode ? 'Edit Module Date' : 'Add Module' }}</h1>
+        <form [formGroup]="createModule" (ngSubmit)="save()">
+            <input hidden formControlName="classid" autocomplete="off" />
+            <div class="input-group">
+                <label class="label">Title</label>
+                <input formControlName="title" autocomplete="off" class="input" type="text">
+            </div>
+            <div class="input-group2">
+                <label class="label2">Description</label>
+                <textarea formControlName="description" autocomplete="off" class="textarea"></textarea>
+            </div>
+            <div class="input-group2">
+                <label class="label2">Date</label>
+                <input formControlName="date" class="input2" type="date">
+            </div>
+            <div class="button-group">
+                <button class="submit-btn" [disabled]="isSubmitting">{{ isEditMode ? 'Save Changes' : 'Add' }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+

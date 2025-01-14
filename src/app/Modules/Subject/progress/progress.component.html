@@ -48,7 +48,7 @@
                         <th>
                             <div class="score-header">
                                 Score
-                                <button (click)="autoCheck()" class="nav-btn auto-check-btn"><i class="fa fa-check" aria-hidden="true"></i>Auto Check</button>
+                                <button (click)="autoCheck()" [disabled]="isSubmitting" class="nav-btn auto-check-btn submitting"><i class="fa fa-check" aria-hidden="true"></i>Auto Check</button>
                             </div>
                         </th>
                     </tr>

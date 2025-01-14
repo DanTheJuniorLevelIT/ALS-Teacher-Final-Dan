@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ApiserviceService } from '../../../apiservice.service';
 import { CommonModule } from '@angular/common';
+import { EditorComponent} from '@tinymce/tinymce-angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-addmat',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, MatFormFieldModule, MatInputModule, MatIconModule,ReactiveFormsModule, EditorComponent],
   templateUrl: './addmat.component.html',
   styleUrl: './addmat.component.css'
 })
@@ -21,20 +22,40 @@ export class AddmatComponent implements OnInit {
   subjectID: any;
   selectedFile: File | null = null; // Holds the selected file
 
-  createLesson = new FormGroup({
-    modules_id: new FormControl(localStorage.getItem('moduleid')),
-    topic_title: new FormControl(null),
-    lesson: new FormControl(null),
-  });
+  createLesson: FormGroup;
+
+  // createLesson = new FormGroup({
+  //   modules_id: new FormControl(localStorage.getItem('moduleid')),
+  //   topic_title: new FormControl(null),
+  //   lesson: new FormControl(null),
+  // });
 
   constructor(
     private apiService: ApiserviceService,
     private route: Router,
-  ) {}
+  ) {
+    this.createLesson = new FormGroup({
+      modules_id: new FormControl(localStorage.getItem('moduleid')),
+      topic_title: new FormControl(null),
+      lesson: new FormControl(null),
+    });
+  }
 
   ngOnInit(): void {
     this.subjectID = localStorage.getItem('classid');
     this.storedModuleID = localStorage.getItem('moduleid');
+  }
+
+  onEditorInit(event: any): void {
+    const editor = event.editor;
+
+    // Set initial content from FormControl
+    editor.setContent(this.createLesson.get('lesson')?.value || '');
+
+    // Update FormControl on content change
+    editor.on('keyup change', () => {
+      this.createLesson.get('lesson')?.setValue(editor.getContent());
+    });
   }
 
   onFileSelected(event: any) {
@@ -61,11 +82,21 @@ export class AddmatComponent implements OnInit {
 
     this.apiService.createTopic(formData).subscribe(
       (response) => {
-        Swal.fire({
-          title: "Success",
-          text: "Lesson created",
-          icon: "success"
-        });
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Lesson added"
+          });
         console.log('Lesson created successfully:', response);
         this.route.navigate(['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', storedModuleID, 'mat']); // Redirect on success
         this.isSubmitting = false;

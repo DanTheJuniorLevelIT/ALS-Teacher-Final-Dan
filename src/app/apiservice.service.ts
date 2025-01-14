@@ -234,9 +234,9 @@ export class ApiserviceService {
     // return this.http.post(this.url + 'api/modules/create', data,);
   }
 
-  updateModuleDate(id: number, date: string) {
+  updateModuleDate(id: number, data: any) {
     const headers = {'Authorization': 'Bearer ' + this.token};
-    return this.http.put(`${this.url}api/modules/updateDate/${id}`, { date }, { headers });
+    return this.http.post(`${this.url}api/modules/updateDate/${id}`, data , { headers });
   }
   
   getModules(id: number){
@@ -313,6 +313,16 @@ export class ApiserviceService {
     return this.http.get(`${this.url}api/messages/conversation/${lrn}`, { headers });
   }
 
+  getUnreadCount(id: any){
+    const headers = { 'Authorization': 'Bearer ' + this.token };
+    return this.http.get(`${this.url}api/messages/unread/${id}`, { headers });
+  }
+
+  markAllMessagesAsRead(adminID: number, lrn: string) {
+    const headers = { 'Authorization': 'Bearer ' + this.token };
+    const body = { adminID, lrn };
+    return this.http.post(`${this.url}api/messages/mark-read`, body, { headers });
+  }
   //END
   
   //Account

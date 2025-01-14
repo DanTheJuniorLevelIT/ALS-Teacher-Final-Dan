@@ -209,13 +209,13 @@ a.active .nav-btn {
   .student-answer {
     float: left;
     clear: both;
-    background-color: #d1e7dd;
+    background-color: #f8fcf8;
   }
   
   .teacher-answer {
     float: right;
     clear: both;
-    background-color: #f8d7da;
+    background-color: #ececec;
   }
   
   .answer-user {
