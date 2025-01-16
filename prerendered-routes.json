@@ -1,0 +1,20 @@
+{
+  "routes": [
+    "/forgotpassword",
+    "/login",
+    "/main",
+    "/main/Account",
+    "/main/Account/main",
+    "/main/Account/main/account",
+    "/main/Home",
+    "/main/Home/main",
+    "/main/Home/main/home",
+    "/main/Message",
+    "/main/Message/main",
+    "/main/Message/main/message",
+    "/main/Message/main/message/view",
+    "/main/Subject",
+    "/main/Subject/main",
+    "/main/Subject/main/subject"
+  ]
+}
