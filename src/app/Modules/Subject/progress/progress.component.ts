@@ -24,7 +24,7 @@ export class ProgressComponent {
   totalPoints: any;
   isModalOpen = false;
   questionText = '';
-  questionType = 'multiple-choice'; // Default type
+  questionType = 'multiple-choice';
   optionA = '';
   optionB = '';
   optionC = '';
@@ -38,7 +38,6 @@ constructor(private apiserv: ApiserviceService, private router: Router){}
 
 ngOnInit(): void {
   this.isLoading = true
-  // Retrieve the subjectID from localStorage
   this.assessTitle = localStorage.getItem('assessTitle');
   const storedSubjectID = localStorage.getItem('classid');
   const storedAssessmentID = localStorage.getItem('assid');
@@ -47,7 +46,7 @@ ngOnInit(): void {
   const storedModuleTitle = localStorage.getItem('moduletitle');
     if (storedSubjectID) {
       this.moduleID = storedModuleID;
-      this.subjectID = +storedSubjectID;  // Convert the string to a number
+      this.subjectID = +storedSubjectID;
       this.assessmentID = storedAssessmentID;
       this.moduleTitle = storedModuleTitle;
       this.loadStudents(); 
@@ -72,7 +71,6 @@ loadStudents(){
   );
 }
 
-//2nd Approach
 autoCheck() {
   this.isSubmitting = true;
   this.apiserv.autoCheck(this.subjectID, this.assessmentID).subscribe(
@@ -84,7 +82,6 @@ autoCheck() {
       this.students = response.score;
       this.students = response.status;
       this.isSubmitting = false;
-      // After auto-check, reload the student data to get updated scores
     },
     (error) => {
       console.error('Error during auto-check:', error);
@@ -112,9 +109,7 @@ autoCheck() {
     localStorage.setItem('lrn', lrnid);
     localStorage.setItem('fname', fname);
     localStorage.setItem('lname', lname);
-    // Store the subjectID in localStorage
-  
-    // Navigate to the modules page
+
     this.router.navigate(['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', this.moduleID, 'assess', 'question', storedAssessmentID, 'checking']);
   }
 
@@ -124,9 +119,7 @@ autoCheck() {
     localStorage.setItem('lrn', lrnid);
     localStorage.setItem('fname', fname);
     localStorage.setItem('lname', lname);
-    // Store the subjectID in localStorage
   
-    // Navigate to the modules page
     this.router.navigate(['/main/Subject/main/subject/modulesmain', storedSubjectID, 'modules', this.moduleID, 'assess', 'question', storedAssessmentID, 'file']);
   }
 

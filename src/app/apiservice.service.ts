@@ -12,11 +12,6 @@ export class ApiserviceService {
 
   constructor(private http: HttpClient) {}
 
-  // Create a getter method for the URL
-  getBaseUrl() {
-    return this.url;
-  }
-
   sendResetCode(data: any) {
     return this.http.post(this.url + 'api/sendResetCode', data);
   }
@@ -330,7 +325,7 @@ export class ApiserviceService {
     return this.http.post(`${this.url}api/uploadProfilePicture/${id}`, formData, { headers });
   }
 
-  private profilePicSource = new BehaviorSubject<string>('assets/icon.jpg'); //Default Picture
+  private profilePicSource = new BehaviorSubject<string>('assets/icon.jpg');
   currentProfilePic = this.profilePicSource.asObservable();
 
   updateProfilePic(newPicUrl: string): void {
@@ -342,7 +337,6 @@ export class ApiserviceService {
     return this.http.post(`${this.url}api/updateAdminPassword/${lrn}`, pdata, { headers });
   }
 
-  // Reset profile picture to default icon when logging out
   resetProfilePic() {
     this.profilePicSource.next('assets/icon.jpg');
   }

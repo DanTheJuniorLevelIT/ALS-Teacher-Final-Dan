@@ -14,8 +14,8 @@ import Swal from 'sweetalert2'
 })
 export class QuestionComponent implements OnInit{
 
-  isSubmitting: boolean = false; // Tracks submission state
-  isLoading: boolean = false; // Tracks submission state
+  isSubmitting: boolean = false;
+  isLoading: boolean = false;
 
   qid: any;
   res: any;
@@ -39,12 +39,12 @@ export class QuestionComponent implements OnInit{
   totalPoints: any;
 
   isModalOpen = false;
-  isEditing = false; // To track if we are in edit mode
+  isEditing = false;
   selectedQuestion: any = null; 
   questionText = '';
-  questionType = 'multiple-choice'; // Default type
+  questionType = 'multiple-choice';
   options: { text: string }[] = [];
-  optionLabels: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G']  // Start with one option input
+  optionLabels: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
   keyAnswer = '';
   points = 1;
   Object: any;
@@ -54,7 +54,6 @@ export class QuestionComponent implements OnInit{
   ngOnInit(): void {
     this.isLoading = true;
     this.options.push({ text: '' });
-    // Retrieve the ClassID from localStorage
     this.lessonTitle = localStorage.getItem('lessTitle');
     const storedClassID = localStorage.getItem('classid');
     const storedAssessmentID = localStorage.getItem('assid');
@@ -62,7 +61,7 @@ export class QuestionComponent implements OnInit{
     const storedModuleTitle = localStorage.getItem('moduletitle');
     if (storedClassID) {
       this.moduleID = storedModuleID;
-      this.ClassID = +storedClassID;  // Convert the string to a number
+      this.ClassID = +storedClassID; 
       this.assessmentID = storedAssessmentID;
       this.moduleTitle = storedModuleTitle;
       this.loadQuestions();
@@ -88,11 +87,10 @@ export class QuestionComponent implements OnInit{
     })
   }
 
-  // Function to add an empty option field
   addOption() {
-    // Ensure that we don't add more than the available labels (e.g., A to G)
+
     if (this.options.length < this.optionLabels.length) {
-        this.options.push({ text: '' }); // Add a new empty option to the array
+        this.options.push({ text: '' });
     }
   }
 
@@ -103,7 +101,7 @@ export class QuestionComponent implements OnInit{
   loadQuestions(){
     this.apiService.getQuestion(this.assessmentID).subscribe((response: any) => {
       if (response.data && Array.isArray(response.data)) {
-        this.questions = response.data;  // Access the data array in the response
+        this.questions = response.data; 
         this.filteredQuestionTypes();
         console.log(this.questions);
         this.isLoading = false;
@@ -133,21 +131,19 @@ export class QuestionComponent implements OnInit{
     this.isEditing = true;
     this.selectedQuestion = this.questions.find((q: any) => q.question_id === id);
   
-    // Pre-fill the form fields with selected question data
     this.questionText = this.selectedQuestion.question;
     this.questionType = this.selectedQuestion.type;
-    // Set keyAnswer based on question type
     if (this.questionType === 'essay') {
-      this.keyAnswer = '';  // Key answer is not required for essay type
+      this.keyAnswer = '';  
     } else {
-      this.keyAnswer = this.selectedQuestion.key_answer;  // Use the key answer for other types
+      this.keyAnswer = this.selectedQuestion.key_answer;  
     }
     this.points = this.selectedQuestion.points;
   
     if (this.questionType === 'multiple-choice') {
-      this.options = this.selectedQuestion.options.map((opt: any) => ({ text: opt }));  // Populate options array
+      this.options = this.selectedQuestion.options.map((opt: any) => ({ text: opt })); 
     } else {
-      this.options = [{ text: '' }];  // Reset options if not multiple-choice
+      this.options = [{ text: '' }];  
     }
   
     this.openModal();
@@ -169,7 +165,6 @@ export class QuestionComponent implements OnInit{
   }
 
 onQuestionTypeChange(): void {
-  // Reset keyAnswer when changing the type of question
   this.keyAnswer = '';
 }
 
@@ -180,14 +175,13 @@ addQuestion() {
     assessment_id: this.assessmentID,
     question: this.questionText,
     type: this.questionType,
-    key_answer: this.questionType !== 'Essay' ? this.keyAnswer : null, // Don't send key_answer for essay
+    key_answer: this.questionType !== 'Essay' ? this.keyAnswer : null, 
     points: this.points,
     options: this.getOptions()
   };
 
   if (this.isEditing) {
-    this.isSubmitting = true; // Disable the button
-    // Update existing question
+    this.isSubmitting = true; 
     this.apiService.editQuestion(questionPayload).subscribe(
       (response: any) => {
         Swal.fire({
@@ -217,7 +211,6 @@ addQuestion() {
       this.isSubmitting = false;
       return;
     }  
-    // Add new question
     this.isSubmitting = true;
     this.apiService.createQuestion(questionPayload).subscribe(
       (response: any) => {
@@ -296,9 +289,7 @@ navigateToProgress(title: any) {
   localStorage.setItem('assessTitle', title);
   const storedClassID = localStorage.getItem('classid');
   const storedAssessmentID = localStorage.getItem('assid');
-  // Store the ClassID in localStorage
 
-  // Navigate to the modules page
   this.router.navigate(['/main/Subject/main/subject/modulesmain', storedClassID, 'modules', this.moduleID, 'assess', 'question', storedAssessmentID, 'progress']);
 }
 

@@ -37,7 +37,6 @@
         <div class="spinner"></div>
     </div>
     
-    <!-- Lesson Details (will take 9 columns on medium screens and larger) -->
     <div *ngIf="!isLoading" class="col-md-9">
         <div class="card" *ngFor="let lesson of lessons; let i = index" [attr.id]="'lesson-' + i" style="margin-bottom: 40px;">
             <div class="card-header d-flex align-items-center" style="position: relative;">

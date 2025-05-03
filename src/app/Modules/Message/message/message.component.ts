@@ -16,10 +16,10 @@ export class MessageComponent implements OnInit{
 
   admin: any;
 
-  isLoading: boolean = false; // This controls the loader visibility
-  isSubmitting: boolean = false; // Tracks submission state
+  isLoading: boolean = false;
+  isSubmitting: boolean = false;
 
-  private intervalId: any; // To store the interval reference
+  private intervalId: any;
   isModalOpen = false;
   isModalOpen2 = false;
   isModalOpen3 = false;
@@ -47,7 +47,7 @@ export class MessageComponent implements OnInit{
           const replyPayload = {
               lrn: lrn,
               messages: this.replyText,
-              adminID: localStorage.getItem('id'), // Assuming the sender is the logged-in admin
+              adminID: localStorage.getItem('id'),
               mid: this.selectedMessageID
           };
 
@@ -62,8 +62,8 @@ export class MessageComponent implements OnInit{
                     timer: 1000
                   });
                   this.isModalOpen3 = false;
-                  this.replyText = ''; // Clear the reply box
-                  this.loadMessage(localStorage.getItem('id')); // Reload messages to show the updated one
+                  this.replyText = '';
+                  this.loadMessage(localStorage.getItem('id'));
                   this.isSubmitting = false;
               },
               error => {
@@ -89,7 +89,7 @@ export class MessageComponent implements OnInit{
 
 
   constructor(private apiserve: ApiserviceService, private route: Router) {
-    this.currentDate = new Date(); // Initialize with the current date and time
+    this.currentDate = new Date();
   }
   ngOnInit(): void {
     const adminid = localStorage.getItem('id');
@@ -101,7 +101,7 @@ export class MessageComponent implements OnInit{
 
     this.intervalId = setInterval(() => {
       this.loadMessage(adminid);
-    }, 20000); // = 20 seconds
+    }, 20000);
   }
 
   getAdminDetails() {
@@ -110,19 +110,17 @@ export class MessageComponent implements OnInit{
   }
 
   ngOnDestroy(): void {
-    // Clear the interval when the component is destroyed to prevent memory leaks
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
   }
 
   spinner() {
-    this.isLoading = true; // Show the loader before the data is loaded
+    this.isLoading = true; 
 
-    // Simulate data fetching (you can replace this with an actual service call)
     setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 20000); // Simulated delay of 30 seconds
+      this.isLoading = false; 
+    }, 20000);
   }
 
   loadMessage(id: any){
@@ -180,7 +178,7 @@ export class MessageComponent implements OnInit{
     const messagePayload = {
       lrn: recipient,
       messages: messageText,
-      adminID: localStorage.getItem('id'), // Assuming adminID is stored in localStorage
+      adminID: localStorage.getItem('id'),
     };
     this.isSubmitting = true;
     this.apiserve.sendMessage(messagePayload).subscribe(
@@ -194,7 +192,7 @@ export class MessageComponent implements OnInit{
           timer: 1000
         });
         this.closeModal2();
-        this.loadMessage(localStorage.getItem('id')); // Reload messages to update the list
+        this.loadMessage(localStorage.getItem('id'));
         this.isSubmitting = false;
       },
       error => {

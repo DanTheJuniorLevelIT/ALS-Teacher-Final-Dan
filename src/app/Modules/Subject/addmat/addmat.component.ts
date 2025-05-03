@@ -43,10 +43,8 @@ export class AddmatComponent implements OnInit {
   onEditorInit(event: any): void {
     const editor = event.editor;
 
-    // Set initial content from FormControl
     editor.setContent(this.createLesson.get('lesson')?.value || '');
 
-    // Update FormControl on content change
     editor.on('keyup change', () => {
       this.createLesson.get('lesson')?.setValue(editor.getContent());
     });

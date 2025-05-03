@@ -61,7 +61,7 @@
                       </td>
                       <ng-container *ngIf="student.score !== null; else elseTemplate">
                         <td>
-                          {{ student.score }} <!-- Always display the score, including 0 -->
+                          {{ student.score }}
                           <a (click)="navigateToChecking(student.lrn, student.firstname, student.lastname)">
                             <button class="nav-btn auto-check-btn">
                               <i class="fa fa-eye" aria-hidden="true"></i>

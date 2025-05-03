@@ -13,10 +13,10 @@ templateUrl: './discussion.component.html',
 })
 export class DiscussionComponent implements OnInit {
 
-  isLoading: boolean = false; // This controls the loader visibility
+  isLoading: boolean = false;
   isSubmitting: boolean= false;
   
-  private intervalId: any; // To store the interval reference
+  private intervalId: any;
   subjectID: number | null = null;
   moduleID: any;
   moduleTitle: any;
@@ -50,68 +50,61 @@ export class DiscussionComponent implements OnInit {
 
       this.spinner();
 
-      // Set an interval to refresh discussions every 10 seconds
       this.intervalId = setInterval(() => {
         this.loadDiscussions(this.discussuinID);
-      }, 20000); // = 20 seconds
+      }, 20000);
     }
   }
 
   ngOnDestroy(): void {
-    // Clear the interval when the component is destroyed to prevent memory leaks
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
   }
 
   spinner() {
-    this.isLoading = true; // Show the loader before the data is loaded
+    this.isLoading = true;
 
-    // Simulate data fetching (you can replace this with an actual service call)
     setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 20000); // Simulated delay of 20 seconds
+      this.isLoading = false;
+    }, 20000);
   }
 
   transformText(text: string): string {
-    // Split text into paragraphs by double newlines or line breaks
     let paragraphs = text.split(/\n\s*\n/);
   
-    // For each paragraph, add <p> tags, and within each paragraph add <br> after each period
     return paragraphs
-      .map(paragraph => paragraph.replace(/\.\s*/g, '.<br>')) // Add <br> after each period
-      .map(paragraph => `<p>${paragraph}</p>`) // Wrap each transformed paragraph in <p> tags
-      .join(''); // Join all paragraphs together
+      .map(paragraph => paragraph.replace(/\.\s*/g, '.<br>'))
+      .map(paragraph => `<p>${paragraph}</p>`)
+      .join('');
   }
 
-  // OLD
   loadDiscussions(discussionID: number) {
     console.log(discussionID);
     this.apiService.viewDiscussionReplies(discussionID).subscribe((data: any) => {
       const groupedDiscussions: any[] = [];
-  
-      // Group by student-teacher pairs
+
       let currentStudentReply: { user: string; date: any; answer: any; role: string; } | null = null;
   
       data.forEach((reply: any) => {
-        if (reply.lrn) { // Student reply
+        if (reply.lrn) {
           if (currentStudentReply) {
-            groupedDiscussions.push(currentStudentReply); // Push previous student reply
+            groupedDiscussions.push(currentStudentReply);
             currentStudentReply = null;
           }
           currentStudentReply = {
-            user: `${reply.student_firstname} ${reply.student_lastname}`, // Student's full name
+            user: `${reply.student_firstname} ${reply.student_lastname}`,
             date: reply.created_at,
             answer: reply.reply,
             role: 'student'
           };
-        } else { // Teacher reply
+        } else {
           if (currentStudentReply) {
-            groupedDiscussions.push(currentStudentReply); // Push student reply
-            currentStudentReply = null; // Reset student reply
+            groupedDiscussions.push(currentStudentReply);
+            currentStudentReply = null;
           }
           groupedDiscussions.push({
-            user: `${reply.teacher_firstname} ${reply.teacher_lastname}`, // Teacher's full name
+            user: `${reply.teacher_firstname} ${reply.teacher_lastname}`,
             date: reply.created_at,
             answer: reply.reply,
             role: 'teacher'
@@ -121,7 +114,6 @@ export class DiscussionComponent implements OnInit {
 
       console.log(data);
   
-      // If there is a student reply left without a teacher reply, add it
       if (currentStudentReply) {
         groupedDiscussions.push(currentStudentReply);
       }
@@ -130,22 +122,20 @@ export class DiscussionComponent implements OnInit {
     });
   }
 
-  // Submit a new discussion reply
   submitAnswer(){
     this.isSubmitting = true;
     const newAnswer = this.discussionForm.value.answer;
     const storedTeacherID = localStorage.getItem('id');
 
-    // Prepare the payload based on the user role (student or teacher)
     const payload = {
       discussionid: this.discussuinID,
-      lrn: null, // If the user is a student, set the learner ID here
-      adminID: storedTeacherID, // Set teacher's admin ID if applicable
+      lrn: null,
+      adminID: storedTeacherID,
       reply: newAnswer
     };
 
     this.apiService.sendDiscussionReplies(payload).subscribe((response: any) => {
-      this.loadDiscussions(this.discussuinID); // Reload replies after sending a new one
+      this.loadDiscussions(this.discussuinID);
       this.discussionForm.reset();
       this.isSubmitting = false;
     });

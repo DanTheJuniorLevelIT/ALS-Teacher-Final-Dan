@@ -12,8 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class ViewmessageComponent implements OnInit{
 
-  isLoading: boolean = false; // This controls the loader visibility
-  isSubmitting: boolean = false; // Tracks submission state
+  isLoading: boolean = false;
+  isSubmitting: boolean = false;
 
   convoMessages: any[] = [];
   learnerName: string = '';
@@ -26,12 +26,12 @@ export class ViewmessageComponent implements OnInit{
   private intervalId: any;
 
   constructor(private apiService: ApiserviceService) {
-    this.currentDate = new Date(); // Initialize with the current date and time
+    this.currentDate = new Date();
   }
   ngOnInit(): void {
     this.NameLearner = localStorage.getItem('learner');
-    this.lrnLearner = localStorage.getItem('lrn'); // Replace with dynamic LRN
-    this.adminID = localStorage.getItem('id'); // Replace with dynamic LRN
+    this.lrnLearner = localStorage.getItem('lrn');
+    this.adminID = localStorage.getItem('id');
     const admin = this.getAdminDetails();
 
     this.currentUser = `${admin.firstname} ${admin.lastname}`;
@@ -40,11 +40,10 @@ export class ViewmessageComponent implements OnInit{
 
     this.intervalId = setInterval(() => {
       this.loadConversation(this.lrnLearner);;
-    }, 20000); // = 20 seconds
+    }, 20000);
   }
 
   ngOnDestroy(): void {
-    // Clear the interval when the component is destroyed to prevent memory leaks
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
@@ -69,8 +68,8 @@ export class ViewmessageComponent implements OnInit{
     if (!this.newMessage.trim()) return;
 
     const messageData = {
-      lrn: this.lrnLearner, // Replace with dynamic LRN
-      adminID: this.adminID, // Replace with dynamic Admin ID
+      lrn: this.lrnLearner,
+      adminID: this.adminID,
       messages: this.newMessage,
       sender_name: this.learnerName
     };
@@ -83,12 +82,11 @@ export class ViewmessageComponent implements OnInit{
   }
 
   spinner() {
-    this.isLoading = true; // Show the loader before the data is loaded
+    this.isLoading = true;
 
-    // Simulate data fetching (you can replace this with an actual service call)
     setTimeout(() => {
-      this.isLoading = false; // Hide the loader after data is fetched
-    }, 20000); // Simulated delay of 20 seconds
+      this.isLoading = false;
+    }, 20000);
   }
 
 }

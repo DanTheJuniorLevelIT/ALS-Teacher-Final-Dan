@@ -56,7 +56,6 @@
         <div *ngIf="studentAnswers.length" class="answers-container">
             <ul class="answer-list">
               <li *ngFor="let answer of studentAnswers; let i = index" class="answer-item">
-                <!-- Question and Score -->
                 <div class="question-score">
                   <div class="question">
                     <strong>{{ i + 1 }}. {{ answer.question }}</strong>
@@ -76,7 +75,6 @@
                   </div>
                 </div>
           
-                <!-- Student Answer -->
                 <div class="student-answer">
                   <span *ngIf="answer.type !== 'Essay'" style="color: blue;">
                     <u>{{ answer.student_answer }}</u>
@@ -89,7 +87,6 @@
                   ></textarea>
                 </div>
           
-                <!-- Key Answer -->
                 <div class="key-answer">
                   <b>Key Answer:</b> <u>{{ answer.key_answer || 'Essay Type' }}</u>
                 </div>

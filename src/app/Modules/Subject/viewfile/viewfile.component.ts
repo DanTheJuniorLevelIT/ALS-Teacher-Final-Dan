@@ -94,7 +94,7 @@ export class ViewfileComponent implements OnInit {
 
   // View file in a new tab
   viewFile(fileUrl: string) {
-    const fullFilePath = this.apiserv.getBaseUrl() + 'storage/Files/' + fileUrl;
+    const fullFilePath = this.apiserv + 'http://localhost:8000/storage/Files/' + fileUrl;
     if (fileUrl.endsWith('.pdf')) {
       window.open(fullFilePath as string, '_blank'); // Open PDFs in a new tab
     } else {

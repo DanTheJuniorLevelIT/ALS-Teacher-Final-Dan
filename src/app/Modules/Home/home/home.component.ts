@@ -98,6 +98,4 @@ export class HomeComponent implements OnInit{
     // Navigate to the modules page
     this.route.navigate(['/main/Subject/main/subject/modulesmain', classid]);
   }
-
-
 }

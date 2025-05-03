@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ApiserviceService } from '../../../apiservice.service';
 import { CommonModule } from '@angular/common';
@@ -16,9 +15,7 @@ import Swal from 'sweetalert2';
 export class CheckComponent implements OnInit {
 
   isLoading: boolean = false;
-
   assessTitle: any;
-
   fname: any;
   lname: any;
   fullname: any;
@@ -48,7 +45,6 @@ export class CheckComponent implements OnInit {
     this.fname = first;
     this.lname = last;
     this.fullname = this.fname + ' ' + this.lname;
-    // Retrieve the subjectID from localStorage
     this.lessonTitle = localStorage.getItem('lessTitle');
     const storedSubjectID = localStorage.getItem('classid');
     const storedAssessmentID = localStorage.getItem('assid');
@@ -56,7 +52,7 @@ export class CheckComponent implements OnInit {
     const storedLearnerID = localStorage.getItem('lrn');
       if (storedSubjectID) {
         this.moduleID = storedModuleID;
-        this.subjectID = +storedSubjectID;  // Convert the string to a number
+        this.subjectID = +storedSubjectID;
         this.assessmentID = storedAssessmentID;
         this.learnerID = storedLearnerID;
         this.loadStudentAnswers(this.assessmentID, this.learnerID);
@@ -93,19 +89,17 @@ export class CheckComponent implements OnInit {
   
 
   getLetter(index: number): string {
-    return String.fromCharCode(65 + index);  // Converts 0 -> 'A', 1 -> 'B', etc.
+    return String.fromCharCode(65 + index);
   }
 
-  //working
   manualCheck(questionId: number, score: number) {
     const payload = {
       assessment_id: this.assessmentID,
       learner_id: this.learnerID,
       question_id: questionId,
-      score: score  // Only add this to essay questions
+      score: score
     };
   
-    // Call API to submit the score
     this.apiserv.submitScore(payload).subscribe(
       (response: any) => {
         if (response.status === 'success') {
@@ -124,8 +118,8 @@ export class CheckComponent implements OnInit {
             icon: "success",
             title: "Updated Score"
           });
-          this.totalScore = response.total_score;  // Update total score
-          this.loadStudentAnswers(this.assessmentID, this.learnerID);  // Reload answers to refresh the scores
+          this.totalScore = response.total_score;
+          this.loadStudentAnswers(this.assessmentID, this.learnerID); 
         } else {
           console.error('Failed to add score');
         }
